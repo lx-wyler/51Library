@@ -1,10 +1,10 @@
-C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 21:28:56 PAGE 1   
+C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 22:53:42 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE KEYBOARD
 OBJECT MODULE PLACED IN keyboard.obj
-COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE keyboard\keyboard.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\
-                    -other_head;.\keyboard;.\smg;.\OLED;.\mycommon) DEBUG PRINT(.\keyboard.lst) OBJECT(keyboard.obj)
+COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE keyboard\keyboard.c COMPACT OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;
+                    -.\other_head;.\keyboard;.\smg;.\OLED;.\mycommon) DEBUG PRINT(.\keyboard.lst) OBJECT(keyboard.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
               //      if(key == i){
               //              LED1 = 0;
               //              while(1){
-C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 21:28:56 PAGE 2   
+C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 22:53:42 PAGE 2   
 
               //                      keyboardall = key;
               //              }
@@ -126,7 +126,7 @@ line level    source
  114   1      //      if(i%10 == 0)
  115   1      //      LED0 = ~LED0;
  116   1      //      i++;
-C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 21:28:56 PAGE 3   
+C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 22:53:42 PAGE 3   
 
  117   1              
  118   1              fist_list = 1;
@@ -190,12 +190,12 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 21:28:56 PAGE 4   
+C51 COMPILER V9.00   KEYBOARD                                                              05/11/2021 22:53:42 PAGE 4   
 
-   CODE SIZE        =    211    ----
+   CODE SIZE        =    194    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----       2
-   PDATA SIZE       =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       2
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

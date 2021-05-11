@@ -84,7 +84,7 @@ void Oled_Set_Pos(unsigned char x, unsigned char y)
 {
   OledSendCmd(0xb0+y);
   OledSendCmd((((x + 2)&0xf0)>>4)|0x10);
-  OledSendCmd(((x + 2)&0x0f)|0x01); 
+  OledSendCmd(((x + 2)&0x0f)); 
 }
 
 //开启OLED显示    
@@ -140,12 +140,12 @@ void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
 void OLED_Displaynum6_8(const unsigned int x, const unsigned char y, double num){
 	unsigned char *ch ;
 	
-	sprintf(ch, "%f", num);
+	sprintf(ch, "%n", 123);
 	if( isDecimal(num) )
 		ch[strlen(ch) - 4] = '\0';
 	else
 		ch[strlen(ch) - 7] = '\0';
-	OLED_P6x8Str(0, 7, ch);
+	OLED_P6x8Str(x, y, ch);
 }
 
 // 初始化OLED

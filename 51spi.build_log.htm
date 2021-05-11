@@ -10,19 +10,17 @@ Project File Date:  05/11/2021
 Rebuild target 'Target 1'
 assembling STARTUP.A51...
 compiling main.c...
-MAIN.C(29): warning C206: 'OLED_Clear': missing function-prototype
 compiling uart.c...
 compiling ePaper.c...
+EPAPER\EPAPER.C(408): warning C173: missing return-expression
 EPAPER\EPAPER.C(365): warning C280: 'x': unreferenced local variable
 EPAPER\EPAPER.C(365): warning C280: 'y': unreferenced local variable
 EPAPER\EPAPER.C(365): warning C280: 'ch': unreferenced local variable
+EPAPER\EPAPER.C(408): warning C290: missing return value
 compiling LED.c...
-compiling keyboard.c...
 compiling smg.c...
-compiling oled.c...
-OLED\OLED.C(140): warning C280: 'x': unreferenced local variable
-OLED\OLED.C(140): warning C280: 'y': unreferenced local variable
 compiling mycommon.c...
+compiling oled.c...
 linking...
 *** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
     SYMBOL:  B
@@ -46,14 +44,6 @@ linking...
    DEFINED:  main.obj (MAIN)
 *** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
     SYMBOL:  B
-    MODULE:  keyboard.obj (KEYBOARD)
-   DEFINED:  main.obj (MAIN)
-*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
-    SYMBOL:  B
-    MODULE:  keyboard.obj (KEYBOARD)
-   DEFINED:  main.obj (MAIN)
-*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
-    SYMBOL:  B
     MODULE:  oled.obj (OLED)
    DEFINED:  main.obj (MAIN)
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
@@ -63,24 +53,34 @@ linking...
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _SENDCHAR/UART
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    EPAPERSLEEP/EPAPER
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    EPAPERCLEAN/EPAPER
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    EPAPERDISPLAYALL/EPAPER
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _DISPLAYCHAR6_8/EPAPER
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _DISPLAYNUM6_8/EPAPER
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    _DISPLAYSTR6_8/EPAPER
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _LEDFLICKER/LED
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    GET_KEY/KEYBOARD
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    ?CO?SMG
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    OLED_DISPLAY_ON/OLED
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    OLED_DISPLAY_OFF/OLED
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    _OLED_DISPLAYNUM6_8/OLED
+Program Size: data=15.2 xdata=142 const=580 code=6435
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 22 Warning(s).
+</pre>
+</body>
+</html>
+D_Clear
+    MODULE:  main.obj (MAIN)
+   DEFINED:  oled.obj (OLED)
+Program Size: data=15.2 xdata=123 const=580 code=6475
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 23 Warning(s).
+
     NAME:    OLED_DISPLAY_ON/OLED
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    OLED_DISPLAY_OFF/OLED
@@ -88,43 +88,26 @@ linking...
     SYMBOL:  OLED_Clear
     MODULE:  main.obj (MAIN)
    DEFINED:  oled.obj (OLED)
-Program Size: data=15.2 xdata=184 const=580 code=6787
+Program Size: data=15.2 xdata=125 const=580 code=6685
 creating hex file from "51spi"...
-"51spi" - 0 Error(s), 29 Warning(s).
-</pre>
-</body>
-</html>
-
-creating hex file from "51spi"...
-"51spi" - 0 Error(s), 31 Warning(s).
-ize: data=131.2 xdata=0 const=580 code=4127
-Target not created
-   MODULE:  main.obj (MAIN)
-   DEFINED:  oled.obj (OLED)
-Program Size: data=139.1 xdata=0 const=580 code=4000
-Target not created
-NGTH:  000002H   
-*** ERROR L107: ADDRESS SPACE OVERFLOW
-    SPACE:   DATA
-    SEGMENT: ?DT?GET_KEY?KEYBOARD
-    LENGTH:  000002H   
-*** WARNING L25: DATA TYPES DIFFERENT
+"51spi" - 0 Error(s), 26 Warning(s).
+  MODULE:  main.obj (MAIN)
+    ADDRESS: 1000EDAH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  OLED_Clear
     MODULE:  main.obj (MAIN)
-   DEFINED:  oled.obj (OLED)
-Program Size: data=143.1 xdata=0 const=580 code=3980
-Target not created
-EY?KEYBOARD
-    LENGTH:  000002H   
-*** WARNING L25: DATA TYPES DIFFERENT
-    SYMBOL:  OLED_Clear
+    ADDRESS: 1000EDDH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  ?_OLED_Displaynum6_8?BYTE
     MODULE:  main.obj (MAIN)
-   DEFINED:  oled.obj (OLED)
-Program Size: data=149.1 xdata=0 const=580 code=4002
-Target not created
-R L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  senddelay
-    MODULE:  ePaper.obj (EPAPER)
-    ADDRESS: 1000A39H
-Program Size: data=110.1 xdata=0 const=5316 code=3576
+    ADDRESS: 1000EE0H
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _OLED_Displaynum6_8
+    MODULE:  main.obj (MAIN)
+    ADDRESS: 1000EEDH
+*** ERROR L128: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _OLED_P6x8Str
+    MODULE:  main.obj (MAIN)
+    ADDRESS: 1000EFAH
+Program Size: data=9.1 xdata=92 const=580 code=4230
 Target not created

@@ -3,9 +3,8 @@
 "uart.obj",
 "ePaper.obj",
 "LED.obj",
-"keyboard.obj",
 "smg.obj",
-"oled.obj",
-"mycommon.obj" 
+"mycommon.obj",
+"oled.obj" 
 TO "51spi" 
 

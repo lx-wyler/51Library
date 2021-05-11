@@ -362,8 +362,49 @@ bit Displaynum6_8(const unsigned int x, const unsigned char y, double num){
 
 // 显示字符串
 // 位置规定同数字，也可以看相应的set_par_pos6_8()；
-void Displaystr6_8(const unsigned int x, const unsigned char y,unsigned char *ch){
-	unsigned char c = 0, i = 0, j = 0;
+bit Displaystr6_8(const unsigned int x, const unsigned char y,unsigned char *ch){
+	
+//	if( ch[0] != '\0'){
+//	
+//		unsigned int strlenth;  // 字符串长度
+//		unsigned int remlen = (X_MAX - (int)x) / 6 + 1;  // 剩余可显示字符串长度
+//		unsigned char flagnewline = 0, i, j;  // i 遍历字符串的, j同i
+//		
+//		strlenth = strlen(ch);
+//		
+//		if( remlen < strlenth ){
+//			if(y == Y_MAX)
+//				// 最后一行且剩余一行中的位置显示不下
+//				return 0;
+//			else
+//				flagnewline = 1;
+//		}
+//		
+//		if(flagnewline){
+//			// 需要换行，开辟剩余显示长度
+//			set_par_pos6_8(x, y, remlen);
+//		}
+//		else{
+//			// 不需要换行，开辟字符串长度
+//			set_par_pos6_8(x, y, strlenth);
+//			
+//			sendCom(0x91);  // 进入局部模式
+//	
+//			sendCom(0x13);        //Transfer new data
+//			
+//			for(i = 0; i < strlenth; i++){
+//				for(j = 0; j < 6; j++)
+//					sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
+//			}
+//			
+//		}
+//		
+//		epaperRefresh();
+//		sendCom(0x92);  // 退出局部模式
+//		
+//	}
+//	else
+//		return 0;
 }
 
 
