@@ -1,0 +1,208 @@
+C51 COMPILER V9.00   KEYBOARD                                                              05/10/2021 22:12:26 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE KEYBOARD
+OBJECT MODULE PLACED IN keyboard.obj
+COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE keyboard\keyboard.c OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_
+                    -head;.\keyboard;.\smg) DEBUG PRINT(.\keyboard.lst) OBJECT(keyboard.obj)
+
+line level    source
+
+   1          #include "PinDefine.h"
+   2          #include "keyboard.h"
+   3          #include "led.h"
+   4          #include "smg.h"
+   5          
+   6          
+   7          // 得到按下的按键值
+   8          #if USEPWHAT == 0
+              unsigned char get_key(){
+                      unsigned char key, temp;
+                unsigned char i =0;
+                      
+                      a = 0;
+                fist_line = 1;
+                second_line = 1;
+                third_line = 1;
+                four_line = 1;
+                fist_list = 0;
+                second_list = 0;
+                third_list = 0;
+                      delay(10);
+                      
+                      temp = keyboardall;
+                      
+                      
+              //      if(temp == i){
+              //              LED1 = 0;
+              //              //delay(500);
+              //              while(1){
+              //                      keyboardall = temp;
+              //              }
+              //      }
+              //      else
+              //              LED1 = 1;
+              //      if(i%10 == 0)
+              //      LED0 = ~LED0;
+              //      i++;
+                      
+                      fist_list = 1;
+                second_list = 1;
+                third_list = 1;
+                fist_line = 0;
+                second_line = 0;
+                third_line = 0;
+                four_line = 0;
+                      delay(10);
+                      
+                      key = keyboardall;
+                      key = key & temp;
+                      
+              //      if(key == i){
+              //              LED1 = 0;
+              //              while(1){
+              //                      keyboardall = key;
+C51 COMPILER V9.00   KEYBOARD                                                              05/10/2021 22:12:26 PAGE 2   
+
+              //              }
+              //      }
+              //      else
+              //              LED1 = 1;
+              //      if(i%10 == 0)
+              //        LED0 = ~LED0;
+              //      i++;
+                      
+                      
+                      switch(key){
+                              case 0x22: i = 1;break;
+                              case 0x42: i = 2;break;
+                              case 0x82: i = 3;break;
+                              
+                              case 0x24: i = 4;break;
+                              case 0x44: i = 5;break;
+                              case 0x84: i = 6;break;
+                              
+                              case 0x28: i = 7;break;
+                              case 0x48: i = 8;break;
+                              case 0x88: i = 9;break;
+                              
+                              case 0x30: i = 11;break;
+                              case 0x50: i = 0;break;
+                              case 0x90: i = 12;break;
+                              default : i = 255;  // 没有按键按下
+                      }
+                      
+                      return i;
+              }
+              
+              #else
+  87          unsigned char get_key(){
+  88   1              unsigned char key, temp;
+  89   1        unsigned char i =0;
+  90   1              
+  91   1              SMG1 = 0;
+  92   1        fist_line = 1;
+  93   1        second_line = 1;
+  94   1        third_line = 1;
+  95   1        four_line = 1;
+  96   1        fist_list = 0;
+  97   1        second_list = 0;
+  98   1        third_list = 0;
+  99   1              delay(10);
+ 100   1              
+ 101   1              temp = keyboardall;
+ 102   1              
+ 103   1              
+ 104   1      //      if(temp == i){
+ 105   1      //              LED1 = 0;
+ 106   1      //              //delay(500);
+ 107   1      //              while(1){
+ 108   1      //                      keyboardall = temp;
+ 109   1      //              }
+ 110   1      //      }
+ 111   1      //      else
+ 112   1      //              LED1 = 1;
+ 113   1      //      if(i%10 == 0)
+ 114   1      //      LED0 = ~LED0;
+ 115   1      //      i++;
+ 116   1              
+C51 COMPILER V9.00   KEYBOARD                                                              05/10/2021 22:12:26 PAGE 3   
+
+ 117   1              fist_list = 1;
+ 118   1        second_list = 1;
+ 119   1        third_list = 1;
+ 120   1        fist_line = 0;
+ 121   1        second_line = 0;
+ 122   1        third_line = 0;
+ 123   1        four_line = 0;
+ 124   1              delay(10);
+ 125   1              
+ 126   1              key = keyboardall;
+ 127   1              key = key | temp;
+ 128   1              
+ 129   1      //      P0 = key;
+ 130   1              
+ 131   1      //      if(key == i){
+ 132   1      //              LED1 = 0;
+ 133   1      //              while(1){
+ 134   1      //                      keyboardall = key;
+ 135   1      //              }
+ 136   1      //      }
+ 137   1      //      else
+ 138   1      //              LED1 = 1;
+ 139   1      //      if(i%10 == 0)
+ 140   1      //        LED0 = ~LED0;
+ 141   1      //      i++;
+ 142   1              
+ 143   1              
+ 144   1              switch(key){
+ 145   2                      case 0xDC: i = 1;break;
+ 146   2                      case 0xBC: i = 2;break;
+ 147   2                      case 0x7C: i = 3;break;
+ 148   2                      
+ 149   2                      case 0xDA: i = 4;break;
+ 150   2                      case 0xBA: i = 5;break;
+ 151   2                      case 0x7A: i = 6;break;
+ 152   2                      
+ 153   2                      case 0xD6: i = 7;break;
+ 154   2                      case 0xB6: i = 8;break;
+ 155   2                      case 0x76: i = 9;break;
+ 156   2                      
+ 157   2                      case 0xCE: i = 11;break;
+ 158   2                      case 0xAE: i = 0;break;
+ 159   2                      case 0x6E: i = 12;break;
+ 160   2                      default : i = 255;  // 没有按键按下
+ 161   2              }
+ 162   1              
+ 163   1              return i;
+ 164   1      }
+ 165          #endif
+ 166          
+ 167          
+ 168          //sbit fist_line = P2^1;
+ 169          //sbit second_line = P2^2;
+ 170          //sbit third_line = P2^3;
+ 171          //sbit four_line = P2^4;
+ 172          //sbit fist_list = P2^5;
+ 173          //sbit second_list = P2^6;
+ 174          //sbit third_list = P2^7;
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    165    ----
+C51 COMPILER V9.00   KEYBOARD                                                              05/10/2021 22:12:26 PAGE 4   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

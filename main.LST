@@ -1,0 +1,79 @@
+C51 COMPILER V9.00   MAIN                                                                  05/10/2021 22:12:26 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE main.c OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_head;.\keyboa
+                    -rd;.\smg) DEBUG
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include "LED.h"
+   3          #include "smg.h"
+   4          #include"ePaper.h"
+   5          #include "PinDefine.h"
+   6          #include "uart.h"
+   7          #include "keyboard.h"
+   8          #include <string.h>
+   9          
+  10          
+  11          
+  12          unsigned char send_buff[SENDBUFFMAXSIZE] = {0};
+  13          
+  14          
+  15          int main(){
+  16   1              int a = -588;
+  17   1              float b = -3333561.134;
+  18   1              
+  19   1              ePaperInit();
+  20   1              
+  21   1              epaperClean();
+  22   1              epaperRefresh();
+  23   1              delay(500);
+  24   1              
+  25   1              
+  26   1              Displaynum6_8(0, 0, a);
+  27   1              Displaynum6_8(0, 1, b);
+  28   1              Displaychar6_8(0, 2, '{');
+  29   1              Displaychar6_8(0, 3, '}');
+  30   1              Displaychar6_8(0, 4, '|');
+  31   1      //      epaperRefresh();
+  32   1      //      epaperRefresh();
+  33   1      //      
+  34   1      //      Displaynum5_8('b');
+  35   1      //      epaperRefresh();
+  36   1              
+  37   1      
+  38   1              
+  39   1              
+  40   1              
+  41   1              epaperSleep();
+  42   1              while(1);
+  43   1        return 0;
+  44   1      }
+  45          
+  46          
+  47          
+  48          
+  49          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    112    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.00   MAIN                                                                  05/10/2021 22:12:26 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     50       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

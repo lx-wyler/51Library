@@ -1,0 +1,9 @@
+"STARTUP.obj",
+"main.obj",
+"uart.obj",
+"ePaper.obj",
+"LED.obj",
+"keyboard.obj",
+"smg.obj" 
+TO "51spi" 
+
