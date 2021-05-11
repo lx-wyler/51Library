@@ -2,6 +2,7 @@
 #include "keyboard.h"
 #include "led.h"
 #include "smg.h"
+#include "mycommon.h"
 
 
 // 得到按下的按键值

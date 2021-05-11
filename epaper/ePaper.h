@@ -2,6 +2,12 @@
 #define __epaper_h__
 
 
+// epaper size define
+#define HRES 0x80
+#define VRES_byte1 0x01
+#define VRES_byte2 0x28
+
+
 // ePaper register define
 #define SW_RESET	0X12
 #define DRIVER_OUTPUT_CONTROL	0x01

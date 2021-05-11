@@ -1,14 +1,7 @@
-#include<PinDefine.h>
+#include <PinDefine.h>
+#include "mycommon.h"
 
 
-void delay(unsigned int n){
-  int i;
-	
-	for(;n>0;--n){
-	  i=1000;
-		for(;i>0;--i);
-	}
-}
 
 
 void ledFlicker(unsigned char ledN, unsigned char n, unsigned int time){

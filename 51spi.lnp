@@ -4,6 +4,8 @@
 "ePaper.obj",
 "LED.obj",
 "keyboard.obj",
-"smg.obj" 
+"smg.obj",
+"oled.obj",
+"mycommon.obj" 
 TO "51spi" 
 

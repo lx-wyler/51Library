@@ -310,7 +310,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.\uart;.\epaper;.\led;.\other_head;.\keyboard;.\smg</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -372,35 +372,105 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>uart</GroupName>
+          <Files>
             <File>
-              <FileName>PinDefine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\PinDefine.h</FilePath>
-            </File>
-            <File>
-              <FileName>LED.c</FileName>
+              <FileName>uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\LED.c</FilePath>
+              <FilePath>.\uart\uart.c</FilePath>
             </File>
             <File>
-              <FileName>LED.h</FileName>
+              <FileName>uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\LED.h</FilePath>
+              <FilePath>.\uart\uart.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>ePaper</GroupName>
+          <GroupName>epaper</GroupName>
           <Files>
             <File>
               <FileName>ePaper.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\ePaper.c</FilePath>
+              <FilePath>.\epaper\ePaper.c</FilePath>
             </File>
             <File>
               <FileName>ePaper.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\ePaper.h</FilePath>
+              <FilePath>.\epaper\ePaper.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>led</GroupName>
+          <Files>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\led\LED.c</FilePath>
+            </File>
+            <File>
+              <FileName>LED.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\led\LED.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>other_head</GroupName>
+          <Files>
+            <File>
+              <FileName>PinDefine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\other_head\PinDefine.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>keyboard</GroupName>
+          <Files>
+            <File>
+              <FileName>keyboard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\keyboard\keyboard.c</FilePath>
+            </File>
+            <File>
+              <FileName>keyboard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\keyboard\keyboard.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>smg</GroupName>
+          <Files>
+            <File>
+              <FileName>smg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\smg\smg.c</FilePath>
+            </File>
+            <File>
+              <FileName>smg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\smg\smg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>OLED</GroupName>
+          <Files>
+            <File>
+              <FileName>oled.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\OLED\oled.c</FilePath>
+            </File>
+            <File>
+              <FileName>oled.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\OLED\oled.h</FilePath>
             </File>
           </Files>
         </Group>

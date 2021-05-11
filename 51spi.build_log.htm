@@ -3,10 +3,128 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\lx\OneDrive\2.9ºÚ°×Ä«Ë®ÆÁ\51SP3\51spi.uvproj
-Project File Date:  04/21/2021
+C:\Users\lx\OneDrive\51\5120210510\51spi.uvproj
+Project File Date:  05/11/2021
 
 <h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+MAIN.C(29): warning C206: 'OLED_Clear': missing function-prototype
+compiling uart.c...
+compiling ePaper.c...
+EPAPER\EPAPER.C(365): warning C280: 'x': unreferenced local variable
+EPAPER\EPAPER.C(365): warning C280: 'y': unreferenced local variable
+EPAPER\EPAPER.C(365): warning C280: 'ch': unreferenced local variable
+compiling LED.c...
+compiling keyboard.c...
+compiling smg.c...
+compiling oled.c...
+OLED\OLED.C(140): warning C280: 'x': unreferenced local variable
+OLED\OLED.C(140): warning C280: 'y': unreferenced local variable
+compiling mycommon.c...
+linking...
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  main.obj (MAIN)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  uart.obj (UART)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  uart.obj (UART)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  ePaper.obj (EPAPER)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  LED.obj (LED)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  keyboard.obj (KEYBOARD)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  keyboard.obj (KEYBOARD)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  B
+    MODULE:  oled.obj (OLED)
+   DEFINED:  main.obj (MAIN)
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    UARTINIT/UART
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    FLAGSENDONETIME/UART
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    _SENDCHAR/UART
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    EPAPERSLEEP/EPAPER
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    EPAPERCLEAN/EPAPER
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    EPAPERDISPLAYALL/EPAPER
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    _DISPLAYCHAR6_8/EPAPER
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    _DISPLAYNUM6_8/EPAPER
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    _DISPLAYSTR6_8/EPAPER
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    _LEDFLICKER/LED
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    GET_KEY/KEYBOARD
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    ?CO?SMG
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    OLED_DISPLAY_ON/OLED
+*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
+    NAME:    OLED_DISPLAY_OFF/OLED
+*** WARNING L25: DATA TYPES DIFFERENT
+    SYMBOL:  OLED_Clear
+    MODULE:  main.obj (MAIN)
+   DEFINED:  oled.obj (OLED)
+Program Size: data=15.2 xdata=184 const=580 code=6787
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 29 Warning(s).
 </pre>
 </body>
 </html>
+
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 31 Warning(s).
+ize: data=131.2 xdata=0 const=580 code=4127
+Target not created
+   MODULE:  main.obj (MAIN)
+   DEFINED:  oled.obj (OLED)
+Program Size: data=139.1 xdata=0 const=580 code=4000
+Target not created
+NGTH:  000002H   
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA
+    SEGMENT: ?DT?GET_KEY?KEYBOARD
+    LENGTH:  000002H   
+*** WARNING L25: DATA TYPES DIFFERENT
+    SYMBOL:  OLED_Clear
+    MODULE:  main.obj (MAIN)
+   DEFINED:  oled.obj (OLED)
+Program Size: data=143.1 xdata=0 const=580 code=3980
+Target not created
+EY?KEYBOARD
+    LENGTH:  000002H   
+*** WARNING L25: DATA TYPES DIFFERENT
+    SYMBOL:  OLED_Clear
+    MODULE:  main.obj (MAIN)
+   DEFINED:  oled.obj (OLED)
+Program Size: data=149.1 xdata=0 const=580 code=4002
+Target not created
+R L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
+    SYMBOL:  senddelay
+    MODULE:  ePaper.obj (EPAPER)
+    ADDRESS: 1000A39H
+Program Size: data=110.1 xdata=0 const=5316 code=3576
+Target not created
