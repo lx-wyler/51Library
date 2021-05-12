@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 1   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE EPAPER
@@ -62,7 +62,7 @@ line level    source
   52          
   53          
   54          // 51 send date to ePaper
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 2   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 2   
 
   55          void sendDate(unsigned char date){
   56   1              
@@ -126,7 +126,7 @@ line level    source
  114          void lcd_chkstatus(){
  115   1        unsigned char busy;
  116   1              //LED0=0;
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 3   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 3   
 
  117   1        do
  118   1        {
@@ -190,7 +190,7 @@ line level    source
  176   1          sendDate(0xf7);
  177   1             
  178   1          sendCom(0X02);   //power off
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 4   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 4   
 
  179   1          lcd_chkstatus();
  180   1          sendCom(0X07);   //deep sleep
@@ -254,7 +254,7 @@ line level    source
  238   2                      sendDate((unsigned char)(x >> 8) & 0x01);
  239   2                      sendDate((unsigned char)(x & 0x00ff));
  240   2                      sendDate((unsigned char)(( x + (6 * n - 1 ) >> 8) & 0x01));
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 5   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 5   
 
  241   2                      sendDate((unsigned char)(( x + (6 * n - 1 )) & 0x00ff));
  242   2              }
@@ -318,7 +318,7 @@ line level    source
  300   3                      }
  301   2                      if(!negativeflag)
  302   2                              N--;
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 6   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 6   
 
  303   2              }
  304   1              
@@ -382,72 +382,56 @@ line level    source
  362          
  363          // 显示字符串
  364          // 位置规定同数字，也可以看相应的set_par_pos6_8()；
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 7   
+C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 7   
 
  365          bit Displaystr6_8(const unsigned int x, const unsigned char y,unsigned char *ch){
  366   1              
- 367   1      //      if( ch[0] != '\0'){
- 368   1      //      
- 369   1      //              unsigned int strlenth;  // 字符串长度
- 370   1      //              unsigned int remlen = (X_MAX - (int)x) / 6 + 1;  // 剩余可显示字符串长度
- 371   1      //              unsigned char flagnewline = 0, i, j;  // i 遍历字符串的, j同i
- 372   1      //              
- 373   1      //              strlenth = strlen(ch);
- 374   1      //              
- 375   1      //              if( remlen < strlenth ){
- 376   1      //                      if(y == Y_MAX)
- 377   1      //                              // 最后一行且剩余一行中的位置显示不下
- 378   1      //                              return 0;
- 379   1      //                      else
- 380   1      //                              flagnewline = 1;
- 381   1      //              }
- 382   1      //              
- 383   1      //              if(flagnewline){
- 384   1      //                      // 需要换行，开辟剩余显示长度
- 385   1      //                      set_par_pos6_8(x, y, remlen);
- 386   1      //              }
- 387   1      //              else{
- 388   1      //                      // 不需要换行，开辟字符串长度
- 389   1      //                      set_par_pos6_8(x, y, strlenth);
- 390   1      //                      
- 391   1      //                      sendCom(0x91);  // 进入局部模式
- 392   1      //      
- 393   1      //                      sendCom(0x13);        //Transfer new data
- 394   1      //                      
- 395   1      //                      for(i = 0; i < strlenth; i++){
- 396   1      //                              for(j = 0; j < 6; j++)
- 397   1      //                                      sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
- 398   1      //                      }
- 399   1      //                      
- 400   1      //              }
- 401   1      //              
- 402   1      //              epaperRefresh();
- 403   1      //              sendCom(0x92);  // 退出局部模式
- 404   1      //              
- 405   1      //      }
- 406   1      //      else
- 407   1      //              return 0;
- 408   1      }
-*** WARNING C173 IN LINE 408 OF EPAPER\EPAPER.C: missing return-expression
-*** WARNING C280 IN LINE 365 OF EPAPER\EPAPER.C: 'x': unreferenced local variable
-*** WARNING C280 IN LINE 365 OF EPAPER\EPAPER.C: 'y': unreferenced local variable
-*** WARNING C280 IN LINE 365 OF EPAPER\EPAPER.C: 'ch': unreferenced local variable
- 409          
- 410          
- 411          
- 412          
- 413          
- 414          
- 415          
-*** WARNING C290 IN LINE 408 OF EPAPER\EPAPER.C: missing return value
+ 367   1              if( ch[0] != '\0'){
+ 368   2              
+ 369   2                      unsigned int strlenth;  // 字符串长度
+ 370   2                      unsigned int remlen = (X_MAX - (int)x) / 6 + 1;  // 剩余可显示字符串长度
+ 371   2                      unsigned char i, j;  // i 遍历字符串的, j同i
+ 372   2                      
+ 373   2                      strlenth = strlen(ch);
+ 374   2                      
+ 375   2                      if( remlen < strlenth ){
+ 376   3                              // 剩余一行中的位置显示不下
+ 377   3                              return 0;
+ 378   3                      }
+ 379   2                      
+ 380   2                      // 开辟字符串长度
+ 381   2                      set_par_pos6_8(x, y, strlenth);
+ 382   2                      
+ 383   2                      sendCom(0x91);  // 进入局部模式
+ 384   2      
+ 385   2                      sendCom(0x13);        //Transfer new data
+ 386   2                      
+ 387   2                      for(i = 0; i < strlenth; i++){
+ 388   3                              for(j = 0; j < 6; j++)
+ 389   3                                      sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
+ 390   3                      }
+ 391   2                              
+ 392   2                      
+ 393   2                      epaperRefresh();
+ 394   2                      sendCom(0x92);  // 退出局部模式
+ 395   2                      return 1;
+ 396   2              }
+ 397   1              else
+ 398   1                      return 0;
+ 399   1      }
+ 400          
+ 401          
+ 402          
+ 403          
+ 404          
+ 405          
+ 406          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1775    ----
+   CODE SIZE        =   2009    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----      49
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 08:16:56 PAGE 8   
-
+   XDATA SIZE       =   ----      55
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -459,4 +443,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

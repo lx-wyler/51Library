@@ -135,7 +135,7 @@ void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
 		j++;
 	}
 }
-
+ 
 //ÏÔÊ¾Êı×Ö
 void OLED_Displaynum6_8(const unsigned int x, const unsigned char y, double num){
 	unsigned char ch[21] ;

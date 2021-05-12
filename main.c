@@ -11,37 +11,26 @@
 
 
 
-
-unsigned char code send_buff[SENDBUFFMAXSIZE] = {0};
-
-
 int main(){
-	
-	
-	int a = -588;
-	float b = -3333561.134;
-	float c = -123.2;
-	
-
-	
 	ePaperInit();
 	InitOled();
 	OLED_Clear();
 	OLED_Displaynum6_8(0, 0, -321654);
-	OLED_P6x8Str(0, 1, "liu xin");
+	OLED_P6x8Str(0, 1, "This is my nth OLED program.");
 	
-//	epaperClean();
-//	epaperRefresh();
-//	delay(500);
-//	
-//	Displaystr6_8(0, 1, "abc");
-//	epaperSleep();
+	epaperClean();
+	epaperRefresh();
+	delay(500);
+	
+	Displaystr6_8(0, 1, "This is my first ePaper program.");
+	Displaynum6_8(0, 0, -123.5);
+	epaperSleep();
 
 	
 	
 
 	while(1);
-  return 0;
+	return 0;
 }
 
 

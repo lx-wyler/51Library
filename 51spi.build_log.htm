@@ -4,7 +4,7 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\lx\OneDrive\51\5120210510\51spi.uvproj
-Project File Date:  05/11/2021
+Project File Date:  05/12/2021
 
 <h2>Output:</h2>
 Rebuild target 'Target 1'
@@ -12,11 +12,6 @@ assembling STARTUP.A51...
 compiling main.c...
 compiling uart.c...
 compiling ePaper.c...
-EPAPER\EPAPER.C(408): warning C173: missing return-expression
-EPAPER\EPAPER.C(365): warning C280: 'x': unreferenced local variable
-EPAPER\EPAPER.C(365): warning C280: 'y': unreferenced local variable
-EPAPER\EPAPER.C(365): warning C280: 'ch': unreferenced local variable
-EPAPER\EPAPER.C(408): warning C290: missing return value
 compiling LED.c...
 compiling smg.c...
 compiling mycommon.c...
@@ -62,17 +57,11 @@ linking...
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _SENDCHAR/UART
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    EPAPERSLEEP/EPAPER
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    EPAPERCLEAN/EPAPER
+    NAME:    ?CO?UART
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    EPAPERDISPLAYALL/EPAPER
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _DISPLAYCHAR6_8/EPAPER
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    _DISPLAYNUM6_8/EPAPER
-*** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
-    NAME:    _DISPLAYSTR6_8/EPAPER
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    _LEDFLICKER/LED
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
@@ -83,9 +72,24 @@ linking...
     NAME:    OLED_DISPLAY_OFF/OLED
 *** WARNING L16: UNCALLED FUNCTION, IGNORED FOR OVERLAY PROCESS
     NAME:    GET_KEY/KEYBOARD
-Program Size: data=15.2 xdata=149 const=580 code=6596
+Program Size: data=15.1 xdata=90 const=630 code=6992
 creating hex file from "51spi"...
-"51spi" - 0 Error(s), 27 Warning(s).
+"51spi" - 0 Error(s), 19 Warning(s).
 </pre>
 </body>
 </html>
+5
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 20 Warning(s).
+xdata=158 const=630 code=6897
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 21 Warning(s).
+onst=630 code=6891
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 22 Warning(s).
+a=145 const=630 code=6891
+creating hex file from "51spi"...
+"51spi" - 0 Error(s), 23 Warning(s).
+
+Program Size: data=15.2 xdata=145 const=630 code=6941
+Target not created

@@ -2,6 +2,8 @@
 #include "PinDefine.h"
 #include "smg.h"
 
+unsigned char code send_buff[SENDBUFFMAXSIZE] = 0;
+
 void UartInit()		//9600bps@11.0592MHz
 {
 	TMOD = 0X20;  // 定时器1工作方式2
