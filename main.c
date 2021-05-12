@@ -4,7 +4,7 @@
 #include "ePaper.h"
 #include "PinDefine.h"
 #include "uart.h"
-//#include "keyboard.h"
+#include "keyboard.h"
 #include <string.h>
 #include "mycommon.h"
 #include "oled.h"
@@ -27,13 +27,15 @@ int main(){
 	ePaperInit();
 	InitOled();
 	OLED_Clear();
+	OLED_Displaynum6_8(0, 0, -321654);
+	OLED_P6x8Str(0, 1, "liu xin");
 	
-	epaperClean();
-	epaperRefresh();
-	delay(500);
-	
-	Displaystr6_8(0, 1, "abc");
-	epaperSleep();
+//	epaperClean();
+//	epaperRefresh();
+//	delay(500);
+//	
+//	Displaystr6_8(0, 1, "abc");
+//	epaperSleep();
 
 	
 	

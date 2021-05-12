@@ -138,13 +138,13 @@ void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
 
 //ÏÔÊ¾Êý×Ö
 void OLED_Displaynum6_8(const unsigned int x, const unsigned char y, double num){
-	unsigned char *ch ;
+	unsigned char ch[21] ;
 	
-	sprintf(ch, "%n", 123);
+	sprintf(ch, "%.2f", num);
 	if( isDecimal(num) )
-		ch[strlen(ch) - 4] = '\0';
+		;
 	else
-		ch[strlen(ch) - 7] = '\0';
+		ch[strlen(ch) - 3] = '\0';
 	OLED_P6x8Str(x, y, ch);
 }
 

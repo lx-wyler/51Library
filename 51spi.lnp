@@ -5,6 +5,7 @@
 "LED.obj",
 "smg.obj",
 "mycommon.obj",
-"oled.obj" 
+"oled.obj",
+"keyboard.obj" 
 TO "51spi" 
 
