@@ -33,4 +33,6 @@ bit Displaystr6_8(const unsigned int , const unsigned char ,unsigned char*);
 bit Displaychar6_8(const unsigned int, const unsigned char, const unsigned char);
 // 显示数字（小数，整数都行，小数固定显示2位小数）
 bit Displaynum6_8(const unsigned int x, const unsigned char y, double num);
+// show str (select new line)
+bit Displaystr6_8_2(const unsigned int x, const unsigned char y,unsigned char *ch);
 #endif

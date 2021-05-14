@@ -388,11 +388,67 @@ bit Displaystr6_8(const unsigned int x, const unsigned char y,unsigned char *ch)
 			for(j = 0; j < 6; j++)
 				sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
 		}
-			
+	
+  		
 		
 		epaperRefresh();
 		sendCom(0x92);  // 退出局部模式
 		return 1;
+	}
+	else
+		return 0;
+}
+
+
+
+// show str (select new line)
+bit Displaystr6_8_2(const unsigned int x, unsigned char y,unsigned char *ch){
+	
+	if(ch != '\0' || x < X_MIN){
+		unsigned int strlenth;  // 字符串长度
+		unsigned int remlen = (X_MAX - (int)x) / 6 + 1;  // 剩余可显示字符串长度
+		unsigned int showlen;  // 要开辟的长度
+		unsigned char i, j;  // i 遍历字符串的, j同i
+		bit newlineflag = 0;  // 是否换行标志 =0不换，=1换
+		
+		if(x > X_MAX)
+			y++;
+		if(y < Y_MIN || y > Y_MAX )
+			return 0;
+		
+		strlenth = strlen(ch);
+		
+		if( remlen < strlenth ){
+			// 剩余一行中的位置显示不下
+			showlen = remlen;
+			newlineflag = 1;
+		}
+		else
+			showlen = strlenth;
+		
+		// 开辟显示空间
+		set_par_pos6_8(x, y, showlen);
+		
+		sendCom(0x91);  // 进入局部模式
+
+		sendCom(0x13);        //Transfer new data
+		
+		for(i = 0; i < showlen; i++){
+			for(j = 0; j < 6; j++)
+				sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
+		}
+		
+		epaperRefresh();
+		sendCom(0x92);  // 退出局部模式
+		
+		if(newlineflag == 0)
+			return 1;
+		else{
+			Displaystr6_8_2(0, y + 1, ch + showlen);
+		}
+		
+		return 1;
+		
 	}
 	else
 		return 0;

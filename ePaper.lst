@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 1   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE EPAPER
@@ -62,7 +62,7 @@ line level    source
   52          
   53          
   54          // 51 send date to ePaper
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 2   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 2   
 
   55          void sendDate(unsigned char date){
   56   1              
@@ -126,7 +126,7 @@ line level    source
  114          void lcd_chkstatus(){
  115   1        unsigned char busy;
  116   1              //LED0=0;
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 3   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 3   
 
  117   1        do
  118   1        {
@@ -190,7 +190,7 @@ line level    source
  176   1          sendDate(0xf7);
  177   1             
  178   1          sendCom(0X02);   //power off
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 4   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 4   
 
  179   1          lcd_chkstatus();
  180   1          sendCom(0X07);   //deep sleep
@@ -254,7 +254,7 @@ line level    source
  238   2                      sendDate((unsigned char)(x >> 8) & 0x01);
  239   2                      sendDate((unsigned char)(x & 0x00ff));
  240   2                      sendDate((unsigned char)(( x + (6 * n - 1 ) >> 8) & 0x01));
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 5   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 5   
 
  241   2                      sendDate((unsigned char)(( x + (6 * n - 1 )) & 0x00ff));
  242   2              }
@@ -318,7 +318,7 @@ line level    source
  300   3                      }
  301   2                      if(!negativeflag)
  302   2                              N--;
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 6   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 6   
 
  303   2              }
  304   1              
@@ -382,7 +382,7 @@ line level    source
  362          
  363          // 显示字符串
  364          // 位置规定同数字，也可以看相应的set_par_pos6_8()；
-C51 COMPILER V9.00   EPAPER                                                                05/12/2021 10:51:02 PAGE 7   
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 7   
 
  365          bit Displaystr6_8(const unsigned int x, const unsigned char y,unsigned char *ch){
  366   1              
@@ -410,32 +410,90 @@ line level    source
  388   3                              for(j = 0; j < 6; j++)
  389   3                                      sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
  390   3                      }
- 391   2                              
+ 391   2              
  392   2                      
- 393   2                      epaperRefresh();
- 394   2                      sendCom(0x92);  // 退出局部模式
- 395   2                      return 1;
- 396   2              }
- 397   1              else
- 398   1                      return 0;
- 399   1      }
- 400          
+ 393   2                      
+ 394   2                      epaperRefresh();
+ 395   2                      sendCom(0x92);  // 退出局部模式
+ 396   2                      return 1;
+ 397   2              }
+ 398   1              else
+ 399   1                      return 0;
+ 400   1      }
  401          
  402          
  403          
- 404          
- 405          
- 406          
+ 404          // show str (select new line)
+ 405          bit Displaystr6_8_2(const unsigned int x, unsigned char y,unsigned char *ch){
+ 406   1              
+ 407   1              if(ch != '\0' || x < X_MIN){
+ 408   2                      unsigned int strlenth;  // 字符串长度
+ 409   2                      unsigned int remlen = (X_MAX - (int)x) / 6 + 1;  // 剩余可显示字符串长度
+ 410   2                      unsigned int showlen;  // 要开辟的长度
+ 411   2                      unsigned char i, j;  // i 遍历字符串的, j同i
+ 412   2                      bit newlineflag = 0;  // 是否换行标志 =0不换，=1换
+ 413   2                      
+ 414   2                      if(x > X_MAX)
+ 415   2                              y++;
+ 416   2                      if(y < Y_MIN || y > Y_MAX )
+ 417   2                              return 0;
+ 418   2                      
+ 419   2                      strlenth = strlen(ch);
+ 420   2                      
+ 421   2                      if( remlen < strlenth ){
+ 422   3                              // 剩余一行中的位置显示不下
+ 423   3                              showlen = remlen;
+ 424   3                              newlineflag = 1;
+ 425   3                      }
+ 426   2                      else
+C51 COMPILER V9.00   EPAPER                                                                05/13/2021 22:30:08 PAGE 8   
+
+ 427   2                              showlen = strlenth;
+ 428   2                      
+ 429   2                      // 开辟显示空间
+ 430   2                      set_par_pos6_8(x, y, showlen);
+ 431   2                      
+ 432   2                      sendCom(0x91);  // 进入局部模式
+ 433   2      
+ 434   2                      sendCom(0x13);        //Transfer new data
+ 435   2                      
+ 436   2                      for(i = 0; i < showlen; i++){
+ 437   3                              for(j = 0; j < 6; j++)
+ 438   3                                      sendDate2(~F6x8[ch[i] - 32][j]);  // 这里注意使用sendDate2
+ 439   3                      }
+ 440   2                      
+ 441   2                      epaperRefresh();
+ 442   2                      sendCom(0x92);  // 退出局部模式
+ 443   2                      
+ 444   2                      if(newlineflag == 0)
+ 445   2                              return 1;
+ 446   2                      else{
+ 447   3                              Displaystr6_8_2(0, y + 1, ch + showlen);
+ 448   3                      }
+ 449   2                      
+ 450   2                      return 1;
+ 451   2                      
+ 452   2              }
+ 453   1              else
+ 454   1                      return 0;
+ 455   1      }
+ 456          
+ 457          
+ 458          
+ 459          
+ 460          
+ 461          
+ 462          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2009    ----
+   CODE SIZE        =   2365    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----      55
+   XDATA SIZE       =   ----      69
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----       1
+   BIT SIZE         =   ----       2
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
