@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 22:36:39 PAGE 1   
+C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE OLED
@@ -62,7 +62,7 @@ line level    source
   52   1              OLED_CS = 0;
   53   1              OLED_DC = 1;
   54   1              senddelay();
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 22:36:39 PAGE 2   
+C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 2   
 
   55   1              
   56   1              for(i = 0; i<8; ++i){  // first send D7
@@ -126,7 +126,7 @@ line level    source
  114   2                              OledSendDate(0); 
  115   2              } //¸üÐÂÏÔÊ¾
  116   1      }
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 22:36:39 PAGE 3   
+C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 3   
 
  117          
  118          
@@ -190,7 +190,7 @@ line level    source
  176   1              OledSendCmd(0xDA);//--set com pins hardware configuration
  177   1              OledSendCmd(0x12);
  178   1              OledSendCmd(0xDB);//--set vcomh
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 22:36:39 PAGE 4   
+C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 4   
 
  179   1              OledSendCmd(0x40);//Set VCOM Deselect Level
  180   1              OledSendCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
