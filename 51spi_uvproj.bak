@@ -310,7 +310,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\uart;.\epaper;.\led;.\other_head;.\keyboard;.\smg;.\OLED;.\mycommon</IncludePath>
+              <IncludePath>.\uart;.\epaper;.\led;.\other_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -476,6 +476,66 @@
               <FileName>oled.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\OLED\oled.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>keyboard</GroupName>
+          <Files>
+            <File>
+              <FileName>keyboard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\keyboard\keyboard.c</FilePath>
+            </File>
+            <File>
+              <FileName>keyboard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\keyboard\keyboard.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\i2c\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\i2c\i2c.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mpu6050</GroupName>
+          <Files>
+            <File>
+              <FileName>mpu6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mpu6050\mpu6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu6050.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\mpu6050\mpu6050.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pac</GroupName>
+          <Files>
+            <File>
+              <FileName>pac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pac\pac.c</FilePath>
+            </File>
+            <File>
+              <FileName>pac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pac\pac.h</FilePath>
             </File>
           </Files>
         </Group>

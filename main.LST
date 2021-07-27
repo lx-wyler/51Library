@@ -1,10 +1,10 @@
-C51 COMPILER V9.00   MAIN                                                                  05/13/2021 22:30:08 PAGE 1   
+C51 COMPILER V9.00   MAIN                                                                  07/27/2021 20:48:46 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
 COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE main.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_head;.\
-                    -keyboard;.\smg;.\OLED;.\mycommon) DEBUG
+                    -keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG
 
 line level    source
 
@@ -18,38 +18,126 @@ line level    source
    8          #include <string.h>
    9          #include "mycommon.h"
   10          #include "oled.h"
-  11          
-  12          
-  13          
-  14          int main(){
-  15   1              ePaperInit();
-  16   1      //      InitOled();
-  17   1      //      OLED_Clear();
-  18   1      //      OLED_Displaynum6_8(0, 0, -321654);
-  19   1      //      OLED_P6x8Str(0, 1, "This is my nth OLED program.");
-  20   1              
-  21   1              epaperClean();
-  22   1              epaperRefresh();
-  23   1              delay(500);
-  24   1              
-  25   1              Displaystr6_8(0, 1, "This is my first ePaper program.");
-  26   1              Displaystr6_8_2(280, 2, "This is my first ePaper program.And now alsdjfoi ajsiodfjaosi j aoispoiuwuj j239
-             -3274598 !$#%#@^ owqiejfiodaj.");
-  27   1              Displaynum6_8(0, 0, -123.5);
-  28   1              epaperSleep();
-  29   1      
-  30   1              
-  31   1              
-  32   1      
-  33   1              while(1);
-  34   1              return 0;
-  35   1      }
+  11          #include <stdio.h>
+  12          #include "i2c.h"
+  13          #include "mpu6050.h"
+  14          #include "pac.h"
+  15          
+  16          
+  17          
+  18          /*
+  19          int main(){
+  20                  
+  21                  unsigned int itemp = 0;
+  22                   char ctemp = 0;
+  23                  unsigned char bufftemp[10] = {0};
+  24                  
+  25                  InitOled();
+  26                  OLED_Clear();
+  27                  
+  28                  
+  29                  while(1){
+  30                          sprintf(bufftemp, "%6d", ctemp--);
+  31                          OLED_P6x8Str(0, 0, bufftemp);
+  32                          
+  33                          itemp = ctemp;
+  34                          sprintf(bufftemp, "%6d", itemp);
+  35                          OLED_P6x8Str(0, 1, bufftemp);
+  36                          
+  37                          delay(10);
+  38                  }
+  39                  
+  40                  return 0;
+  41          }
+  42          */
+  43          
+  44          
+  45          
+  46          // test mpu6050 i2c
+  47          
+  48          int main(){
+  49   1              
+  50   1              unsigned int it = 0;
+  51   1              unsigned int temp = 0;
+  52   1              char buff_temp[10] = {0};
+  53   1              
+  54   1              
+C51 COMPILER V9.00   MAIN                                                                  07/27/2021 20:48:46 PAGE 2   
+
+  55   1              
+  56   1              //UartInit();
+  57   1              TESTP = 0;
+  58   1              TESTRECEIVE = 0;
+  59   1              InitOled();
+  60   1              
+  61   1              delay(200);
+  62   1              
+  63   1              I2C_writedata(MPU6050Address, PWR_MGMT_1, 0x00);
+  64   1              delay(10);
+  65   1              I2C_writedata(MPU6050Address, SMPLRT_DIV, 0x07);
+  66   1              delay(10);
+  67   1              I2C_writedata(MPU6050Address, CONFIG, 0x06);
+  68   1              delay(10);
+  69   1              I2C_writedata(MPU6050Address, GYRO_CONFIG, 0x18);
+  70   1              delay(10);
+  71   1              I2C_writedata(MPU6050Address, ACCEL_CONFIG, 0x01);
+  72   1              
+  73   1              delay(100);
+  74   1              
+  75   1              temp = I2C_readdata(MPU6050Address, WHO_AM_I);
+  76   1              sprintf(buff_temp, "%x", temp);
+  77   1              OLED_P6x8Str(0, 6, buff_temp);
+  78   1              
+  79   1              
+  80   1              it = 0;
+  81   1              
+  82   1              LED0 = 1;
+  83   1              while(1){
+  84   2                      
+  85   2                      it++;
+  86   2                      temp = read_accel_x();
+  87   2                      sprintf(buff_temp, "%6d", temp);
+  88   2                      OLED_P6x8Str(0, 0, buff_temp);
+  89   2                      
+  90   2                      temp = read_accel_y();
+  91   2                      sprintf(buff_temp, "%6d", temp);
+  92   2                      OLED_P6x8Str(36, 0, buff_temp);
+  93   2                      
+  94   2                      temp = read_accel_z();
+  95   2                      sprintf(buff_temp, "%6d", temp);
+  96   2                      OLED_P6x8Str(72, 0, buff_temp);
+  97   2                      
+  98   2                      temp = read_gyro_x();
+  99   2                      sprintf(buff_temp, "%6d", temp);
+ 100   2                      OLED_P6x8Str(0, 1, buff_temp);
+ 101   2                      
+ 102   2                      temp = read_gyro_y();
+ 103   2                      sprintf(buff_temp, "%6d", temp);
+ 104   2                      OLED_P6x8Str(36, 1, buff_temp);
+ 105   2                      
+ 106   2                      temp = read_gyro_z();
+ 107   2                      sprintf(buff_temp, "%6d", temp);
+ 108   2                      OLED_P6x8Str(72, 1, buff_temp);
+ 109   2      //              
+ 110   2                      sprintf(buff_temp, "%6d", it);
+ 111   2                      OLED_P6x8Str(0, 7, buff_temp);
+ 112   2                      delay(10);
+ 113   2                      
+ 114   2                      
+ 115   2              }
+ 116   1              return 0;
+C51 COMPILER V9.00   MAIN                                                                  07/27/2021 20:48:46 PAGE 3   
+
+ 117   1      }
+ 118          
+ 119          
+ 120          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     67    ----
-   CONSTANT SIZE    =    143    ----
-   XDATA SIZE       =   ----    ----
+   CODE SIZE        =    583    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----      14
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

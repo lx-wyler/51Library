@@ -3,6 +3,8 @@
 #include "smg.h"
 
 unsigned char code send_buff[SENDBUFFMAXSIZE] = 0;
+unsigned char rbuff[30] = {0};
+unsigned char cout = 0;
 
 void UartInit()		//9600bps@11.0592MHz
 {
@@ -24,18 +26,20 @@ void flagSendOneTime(){
 
 void sendChar(unsigned char c){
 	SBUF = c;
-	while(!TI)
-		if(c != 0)
-		  LED0 = 0;
-		else
-			LED1 = 0;
-	if(c != 0)
-	  LED0 = 1;
-	else
-		LED1 = 1;
+	while(!TI);
+//		if(c != 0)
+//		  LED0 = 0;
+//		else
+//			LED1 = 0;
+//	if(c != 0)
+//	  LED0 = 1;
+//	else
+//		LED1 = 1;
 	TI=0;
 }
 
 void irq_receive() interrupt 4{
 	// »¹Ã»¼Ó
+	rbuff[cout++] = SBUF;
+	RI = 0;
 }

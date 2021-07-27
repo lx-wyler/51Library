@@ -1,0 +1,125 @@
+C51 COMPILER V9.00   MPU6050                                                               07/27/2021 20:48:47 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MPU6050
+OBJECT MODULE PLACED IN mpu6050.obj
+COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE mpu6050\mpu6050.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\ot
+                    -her_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG PRINT(.\mpu6050.lst) OBJECT(mpu6050.obj)
+
+line level    source
+
+   1          #include "mpu6050.h"
+   2          #include "i2c.h"
+   3          #include "mycommon.h"
+   4          
+   5          
+   6          
+   7          // 初始化6050，成功返回1，失败返回0
+   8          bit init_mpu6050(){
+   9   1              delay(200);
+  10   1              
+  11   1              I2C_writedata(MPU6050Address, PWR_MGMT_1, 0x00);
+  12   1              I2C_writedata(MPU6050Address, SMPLRT_DIV, 0x07);
+  13   1              I2C_writedata(MPU6050Address, CONFIG, 0x06);
+  14   1              I2C_writedata(MPU6050Address, GYRO_CONFIG, 0x18);
+  15   1              I2C_writedata(MPU6050Address, ACCEL_CONFIG, 0x01);
+  16   1              
+  17   1              delay(500);
+  18   1              
+  19   1      //      if(0x68 == I2C_readdata(SlaveAddress, WHO_AM_I))
+  20   1      //              return 1;
+  21   1      //      else
+  22   1                      return 0;
+  23   1      }
+  24          
+  25          
+  26          // 读X轴加速度
+  27          int read_accel_x(){
+  28   1              int temp;
+  29   1              
+  30   1              temp = I2C_readdata(MPU6050Address, ACCEL_XOUT_H);
+  31   1              temp = temp << 8;
+  32   1              temp = temp | I2C_readdata(MPU6050Address, ACCEL_XOUT_L);
+  33   1              
+  34   1              return temp;
+  35   1      }
+  36          
+  37          
+  38          // 读y轴加速度
+  39          int read_accel_y(){
+  40   1              int temp;
+  41   1              
+  42   1              temp = I2C_readdata(MPU6050Address, ACCEL_YOUT_H);
+  43   1              temp = temp << 8;
+  44   1              temp = temp | I2C_readdata(MPU6050Address, ACCEL_YOUT_L);
+  45   1              
+  46   1              return temp;
+  47   1      }
+  48          
+  49          
+  50          // 读z轴加速度
+  51          int read_accel_z(){
+  52   1              int temp;
+  53   1              
+  54   1              temp = I2C_readdata(MPU6050Address, ACCEL_ZOUT_H);
+C51 COMPILER V9.00   MPU6050                                                               07/27/2021 20:48:47 PAGE 2   
+
+  55   1              temp = temp << 8;
+  56   1              temp = temp | I2C_readdata(MPU6050Address, ACCEL_ZOUT_L);
+  57   1              
+  58   1              return temp;
+  59   1      }
+  60          
+  61          
+  62          // 读x轴角速度
+  63          int read_gyro_x(){
+  64   1              int temp;
+  65   1              
+  66   1              temp = I2C_readdata(MPU6050Address, GYRO_XOUT_H);
+  67   1              temp = temp << 8;
+  68   1              temp = temp | I2C_readdata(MPU6050Address, GYRO_XOUT_L);
+  69   1              
+  70   1              return temp;
+  71   1      }
+  72          
+  73          
+  74          // 读y轴角速度
+  75          int read_gyro_y(){
+  76   1              int temp;
+  77   1              
+  78   1              temp = I2C_readdata(MPU6050Address, GYRO_YOUT_H);
+  79   1              temp = temp << 8;
+  80   1              temp = temp | I2C_readdata(MPU6050Address, GYRO_YOUT_L);
+  81   1              
+  82   1              return temp;
+  83   1      }
+  84          
+  85          
+  86          // 读z轴角速度
+  87          int read_gyro_z(){
+  88   1              int temp;
+  89   1              
+  90   1              temp = I2C_readdata(MPU6050Address, GYRO_ZOUT_H);
+  91   1              temp = temp << 8;
+  92   1              temp = temp | I2C_readdata(MPU6050Address, GYRO_ZOUT_L);
+  93   1              
+  94   1              return temp;
+  95   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    361    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      12
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
