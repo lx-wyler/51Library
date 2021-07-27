@@ -18,6 +18,11 @@ sbit LED1=P1^5;
 sbit BUTTON = P1^3;
 sbit FMQ = P1^6;
 
+// test
+sbit TESTP = P2^2;
+sbit TESTWHILE = P2^3;
+sbit TESTRECEIVE = P2^4;
+
 #endif
 
 

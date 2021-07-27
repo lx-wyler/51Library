@@ -25,14 +25,16 @@
 #define Y_MAX	15
 
 void ePaperInit();
-void epaperClean();  // Ë¢³É°×É«
-void epaperRefresh();
+void epaperClean();  // åˆ·æˆç™½è‰², è¯¥è¯­å¥è¦çœ‹æ•ˆæœçš„è¯ï¼Œéœ€è¦è¿è¡Œrefreshã€‚
+void epaperRefresh();  //
 void epaperSleep();
-void epaperDisplayall();  // È«¾ÖË¢ĞÂ
+void epaperDisplayall();  // å…¨å±€åˆ·æ–°
 bit Displaystr6_8(const unsigned int , const unsigned char ,unsigned char*);
 bit Displaychar6_8(const unsigned int, const unsigned char, const unsigned char);
-// ÏÔÊ¾Êı×Ö£¨Ğ¡Êı£¬ÕûÊı¶¼ĞĞ£¬Ğ¡Êı¹Ì¶¨ÏÔÊ¾2Î»Ğ¡Êı£©
-bit Displaynum6_8(const unsigned int x, const unsigned char y, double num);
-// show str (select new line)
-bit Displaystr6_8_2(const unsigned int x, const unsigned char y,unsigned char *ch);
+bit Displaynum6_8(const unsigned int x, const unsigned char y, double num);  // æ˜¾ç¤ºæ•°å­—ï¼ˆå°æ•°ã€æ•´æ•°éƒ½è¡Œï¼Œå°æ•°å›ºå®š2ä½ï¼‰
+bit Displaystr6_8_2(const unsigned int x, const unsigned char y,unsigned char *ch);  // show str (select new line)
 #endif
+
+
+
+

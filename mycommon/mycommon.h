@@ -11,4 +11,6 @@ long mypow(long x, int n);  // 整数专用次方
 
 void delay(unsigned int n);
 
+void Delay5us();
+
 #endif

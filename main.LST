@@ -1,10 +1,10 @@
-C51 COMPILER V9.00   MAIN                                                                  05/13/2021 22:30:08 PAGE 1   
+C51 COMPILER V9.00   MAIN                                                                  07/27/2021 22:36:38 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
 COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE main.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_head;.\
-                    -keyboard;.\smg;.\OLED;.\mycommon) DEBUG
+                    -keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG
 
 line level    source
 
@@ -18,37 +18,147 @@ line level    source
    8          #include <string.h>
    9          #include "mycommon.h"
   10          #include "oled.h"
-  11          
-  12          
-  13          
-  14          int main(){
-  15   1              ePaperInit();
-  16   1      //      InitOled();
-  17   1      //      OLED_Clear();
-  18   1      //      OLED_Displaynum6_8(0, 0, -321654);
-  19   1      //      OLED_P6x8Str(0, 1, "This is my nth OLED program.");
+  11          #include <stdio.h>
+  12          #include "i2c.h"
+  13          #include "mpu6050.h"
+  14          #include "pac.h"
+  15          
+  16          
+  17          
+  18          // test epaper
+  19          int main(){
   20   1              
-  21   1              epaperClean();
-  22   1              epaperRefresh();
-  23   1              delay(500);
-  24   1              
-  25   1              Displaystr6_8(0, 1, "This is my first ePaper program.");
-  26   1              Displaystr6_8_2(280, 2, "This is my first ePaper program.And now alsdjfoi ajsiodfjaosi j aoispoiuwuj j239
-             -3274598 !$#%#@^ owqiejfiodaj.");
-  27   1              Displaynum6_8(0, 0, -123.5);
-  28   1              epaperSleep();
-  29   1      
-  30   1              
+  21   1              delay(200);
+  22   1              
+  23   1              ePaperInit();
+  24   1              epaperClean();  // 刷成白色
+  25   1              epaperRefresh();
+  26   1              Displaystr6_8_2(0, 0, "The premise of this book is simple: when it comes to pleasuring women and conversi
+             -ng in the language of love, cunnilingus should be every man's native tongue.");
+  27   1              epaperSleep();
+  28   1              while(1){
+  29   2                      ;
+  30   2              }
   31   1              
-  32   1      
-  33   1              while(1);
-  34   1              return 0;
-  35   1      }
+  32   1              
+  33   1              return 0;
+  34   1      }
+  35          
+  36          
+  37          
+  38          /*
+  39          int main(){
+  40                  
+  41                  unsigned int itemp = 0;
+  42                   char ctemp = 0;
+  43                  unsigned char bufftemp[10] = {0};
+  44                  
+  45                  InitOled();
+  46                  OLED_Clear();
+  47                  
+  48                  
+  49                  while(1){
+  50                          sprintf(bufftemp, "%6d", ctemp--);
+  51                          OLED_P6x8Str(0, 0, bufftemp);
+  52                          
+  53                          itemp = ctemp;
+C51 COMPILER V9.00   MAIN                                                                  07/27/2021 22:36:38 PAGE 2   
+
+  54                          sprintf(bufftemp, "%6d", itemp);
+  55                          OLED_P6x8Str(0, 1, bufftemp);
+  56                          
+  57                          delay(10);
+  58                  }
+  59                  
+  60                  return 0;
+  61          }
+  62          */
+  63          
+  64          
+  65          /*
+  66          // test mpu6050 i2c
+  67          
+  68          int main(){
+  69                  
+  70                  unsigned int it = 0;
+  71                  unsigned int temp = 0;
+  72                  char buff_temp[10] = {0};
+  73                  
+  74                  
+  75                  
+  76                  //UartInit();
+  77                  TESTP = 0;
+  78                  TESTRECEIVE = 0;
+  79                  InitOled();
+  80                  
+  81                  delay(200);
+  82                  
+  83                  I2C_writedata(MPU6050Address, PWR_MGMT_1, 0x00);
+  84                  delay(10);
+  85                  I2C_writedata(MPU6050Address, SMPLRT_DIV, 0x07);
+  86                  delay(10);
+  87                  I2C_writedata(MPU6050Address, CONFIG, 0x06);
+  88                  delay(10);
+  89                  I2C_writedata(MPU6050Address, GYRO_CONFIG, 0x18);
+  90                  delay(10);
+  91                  I2C_writedata(MPU6050Address, ACCEL_CONFIG, 0x01);
+  92                  
+  93                  delay(100);
+  94                  
+  95                  temp = I2C_readdata(MPU6050Address, WHO_AM_I);
+  96                  sprintf(buff_temp, "%x", temp);
+  97                  OLED_P6x8Str(0, 6, buff_temp);
+  98                  
+  99                  
+ 100                  it = 0;
+ 101                  
+ 102                  LED0 = 1;
+ 103                  while(1){
+ 104                          
+ 105                          it++;
+ 106                          temp = read_accel_x();
+ 107                          sprintf(buff_temp, "%6d", temp);
+ 108                          OLED_P6x8Str(0, 0, buff_temp);
+ 109                          
+ 110                          temp = read_accel_y();
+ 111                          sprintf(buff_temp, "%6d", temp);
+ 112                          OLED_P6x8Str(36, 0, buff_temp);
+ 113                          
+ 114                          temp = read_accel_z();
+ 115                          sprintf(buff_temp, "%6d", temp);
+C51 COMPILER V9.00   MAIN                                                                  07/27/2021 22:36:38 PAGE 3   
+
+ 116                          OLED_P6x8Str(72, 0, buff_temp);
+ 117                          
+ 118                          temp = read_gyro_x();
+ 119                          sprintf(buff_temp, "%6d", temp);
+ 120                          OLED_P6x8Str(0, 1, buff_temp);
+ 121                          
+ 122                          temp = read_gyro_y();
+ 123                          sprintf(buff_temp, "%6d", temp);
+ 124                          OLED_P6x8Str(36, 1, buff_temp);
+ 125                          
+ 126                          temp = read_gyro_z();
+ 127                          sprintf(buff_temp, "%6d", temp);
+ 128                          OLED_P6x8Str(72, 1, buff_temp);
+ 129                          
+ 130                          sprintf(buff_temp, "%6d", it);
+ 131                          OLED_P6x8Str(0, 7, buff_temp);
+ 132                          delay(10);
+ 133                          
+ 134                          
+ 135                  }
+ 136                  return 0;
+ 137          }
+ 138          */
+ 139          
+ 140          
+ 141          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     67    ----
-   CONSTANT SIZE    =    143    ----
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =    159    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----

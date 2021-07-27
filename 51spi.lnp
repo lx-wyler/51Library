@@ -6,6 +6,10 @@
 "smg.obj",
 "mycommon.obj",
 "oled.obj",
-"keyboard.obj" 
+"keyboard.obj",
+"i2c.obj",
+"mpu6050.obj",
+"pac.obj" 
 TO "51spi" 
 
+REMOVEUNUSED 

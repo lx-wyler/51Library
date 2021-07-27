@@ -186,7 +186,7 @@ void epaperSleep()
 void epaperClean()
 {
     unsigned int i;
-	unsigned char temp = 0xFF;
+	unsigned char temp = 0xff;
 	
 	  
 	LED0=0;

@@ -13,8 +13,6 @@ void OledSendCmd(unsigned char cmd){
 	unsigned char i;
 	unsigned char temp;
 	
-//	epaperCS=0;  // enable ePaper
-//	epaperDC=0;  // send com
 	OLED_CS = 0;
 	OLED_DC = 0;
 	senddelay();
@@ -117,6 +115,8 @@ void OLED_Clear(void)
 	} //更新显示
 }
 
+
+
 // 显示一组6_8字符串
 void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
 {
@@ -124,7 +124,7 @@ void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
 	
 	while (ch[j]!='\0'){    
 		c = ch[j] - 32;
-		if(x > 120){
+		if(x > 118){
 			x = 0;
 			y++;
 		}

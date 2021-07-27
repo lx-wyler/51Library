@@ -2,7 +2,7 @@
 #include "mycommon.h"
 
 void senddelay(){
-	unsigned char i=5;
+	unsigned char i=1;
 	while(i--)
 		_nop_();
 }
@@ -14,6 +14,21 @@ void delay(unsigned int n){
 	  i=1000;
 		for(;i>0;--i);
 	}
+}
+
+//**************************************
+//延时5微秒(STC90C52RC@12M)
+//不同的工作环境,需要调整此函数
+//当改用1T的MCU时,请调整此延时函数
+//**************************************
+void Delay5us()
+{
+	_nop_();_nop_();_nop_();_nop_();
+	_nop_();_nop_();_nop_();_nop_();
+	_nop_();_nop_();_nop_();_nop_();
+	_nop_();_nop_();_nop_();_nop_();
+	_nop_();_nop_();_nop_();_nop_();
+	_nop_();_nop_();_nop_();_nop_();
 }
 
 
