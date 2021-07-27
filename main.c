@@ -15,6 +15,26 @@
 
 
 
+// test epaper
+int main(){
+	
+	delay(200);
+	
+	ePaperInit();
+	epaperClean();  // 刷成白色
+	epaperRefresh();
+	Displaystr6_8_2(0, 0, "The premise of this book is simple: when it comes to pleasuring women and conversing in the language of love, cunnilingus should be every man's native tongue.");
+	epaperSleep();
+	while(1){
+		;
+	}
+	
+	
+	return 0;
+}
+
+
+
 /*
 int main(){
 	
@@ -42,7 +62,7 @@ int main(){
 */
 
 
-
+/*
 // test mpu6050 i2c
 
 int main(){
@@ -106,7 +126,7 @@ int main(){
 		temp = read_gyro_z();
 		sprintf(buff_temp, "%6d", temp);
 		OLED_P6x8Str(72, 1, buff_temp);
-//		
+		
 		sprintf(buff_temp, "%6d", it);
 		OLED_P6x8Str(0, 7, buff_temp);
 		delay(10);
@@ -115,6 +135,7 @@ int main(){
 	}
 	return 0;
 }
+*/
 
 
 
