@@ -2,15 +2,9 @@
 #include <intrins.h>
 #include "PinDefine.h"
 #include "mycommon.h"
-
-
-
 #include "oled.h"
 #include <stdio.h>
 
-typedef unsigned char uchar;
-typedef unsigned short ushort;
-typedef unsigned int   uint;
 
 
 //**************************************

@@ -1,7 +1,7 @@
 #ifndef __pindefine_h__
 #define __pindefine_h__
 
-#include<reg52.h>
+#include "stc12c5a60s2.h"
 
 // ePaper pin define
 sbit epaperBUSY=P0^0;

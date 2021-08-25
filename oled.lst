@@ -1,10 +1,10 @@
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 1   
+C51 COMPILER V9.00   OLED                                                                  08/25/2021 15:03:12 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE OLED
 OBJECT MODULE PLACED IN oled.obj
 COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE OLED\oled.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_he
-                    -ad;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG PRINT(.\oled.lst) OBJECT(oled.obj)
+                    -ad;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac;.\eeprom) DEBUG PRINT(.\oled.lst) OBJECT(oled.obj)
 
 line level    source
 
@@ -14,212 +14,248 @@ line level    source
    4          #include "commonfront.h"
    5          #include <stdio.h>
    6          #include <string.h>
-   7          
-   8          
-   9          
-  10          // 51 sends command to oled
-  11          void OledSendCmd(unsigned char cmd){
-  12   1              
-  13   1              unsigned char i;
-  14   1              unsigned char temp;
-  15   1              
-  16   1              OLED_CS = 0;
-  17   1              OLED_DC = 0;
-  18   1              senddelay();
+   7          #include "clearrobot.h"
+*** WARNING C318 IN LINE 7 OF OLED\oled.c: can't open file 'clearrobot.h'
+   8          #include "keyboard.h"
+   9          #include "mpu6050.h"
+  10          #include "clearrobot.h"
+*** WARNING C318 IN LINE 10 OF OLED\oled.c: can't open file 'clearrobot.h'
+  11          
+  12          
+  13          
+  14          // 51 sends command to oled
+  15          void OledSendCmd(unsigned char cmd){
+  16   1              
+  17   1              unsigned char i;
+  18   1              unsigned char temp;
   19   1              
-  20   1              for(i = 0; i<8; ++i){  // first send D7
-  21   2      //          epaperCLK = 0;
-  22   2                      OLED_SCL = 0;
-  23   2                      senddelay();
-  24   2                      
-  25   2                      temp=0x80 & cmd;
-  26   2                      if(temp == 0)
-  27   2      //                      epaperDIN=0;
-  28   2                              OLED_SDIN = 0;
-  29   2                      else
-  30   2      //                      epaperDIN=1;
-  31   2                              OLED_SDIN = 1;
-  32   2                      senddelay();
-  33   2                      
-  34   2      //              epaperCLK = 1;
+  20   1              OLED_CS = 0;
+  21   1              OLED_DC = 0;
+  22   1              senddelay();
+  23   1              
+  24   1              for(i = 0; i<8; ++i){  // first send D7
+  25   2                      OLED_SCL = 0;
+  26   2                      senddelay();
+  27   2                      
+  28   2                      temp=0x80 & cmd;
+  29   2                      if(temp == 0)
+  30   2                              OLED_SDIN = 0;
+  31   2                      else
+  32   2                              OLED_SDIN = 1;
+  33   2                      senddelay();
+  34   2                      
   35   2                      OLED_SCL = 1;
   36   2                      cmd <<= 1;
   37   2                      senddelay();
   38   2              }  // end for
   39   1              
-  40   1      //      epaperCS=1;
-  41   1              OLED_CS = 1;
-  42   1      }
+  40   1              OLED_CS = 1;
+  41   1      }
+  42          
   43          
-  44          
-  45          // 51 send date to oled
-  46          void OledSendDate(unsigned char date){
-  47   1              
-  48   1              unsigned char i, temp;
-  49   1              
-  50   1      //      epaperCS=0;  // enable ePaper
-  51   1      //      epaperDC=1;  // send date
-  52   1              OLED_CS = 0;
-  53   1              OLED_DC = 1;
-  54   1              senddelay();
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 2   
+  44          // 51 send date to oled
+  45          void OledSendDate(unsigned char date){
+  46   1              
+  47   1              unsigned char i, temp;
+  48   1              
+  49   1      //      epaperCS=0;  // enable ePaper
+  50   1      //      epaperDC=1;  // send date
+  51   1              OLED_CS = 0;
+  52   1              OLED_DC = 1;
+C51 COMPILER V9.00   OLED                                                                  08/25/2021 15:03:12 PAGE 2   
 
-  55   1              
-  56   1              for(i = 0; i<8; ++i){  // first send D7
-  57   2      //              epaperCLK = 0;
-  58   2                      OLED_SCL = 0;
-  59   2                      senddelay();
-  60   2                      
-  61   2                      temp=0x80 & date;
-  62   2                      //epaperDIN = ((read & com) == 1 ? 1: 0);
-  63   2                      if(temp == 0)
-  64   2      //                      epaperDIN=0;
-  65   2                              OLED_SDIN = 0;
-  66   2                      else
-  67   2      //                      epaperDIN=1;
-  68   2                              OLED_SDIN = 1;
-  69   2                      senddelay();
-  70   2                      
-  71   2      //              epaperCLK = 1;
-  72   2                      OLED_SCL = 1;
-  73   2                      date<<=1;
-  74   2                      senddelay();
-  75   2              }  // end for
-  76   1              
-  77   1      //      epaperCS=1;
-  78   1              OLED_CS = 1;
-  79   1      }
-  80          
-  81          void Oled_Set_Pos(unsigned char x, unsigned char y)
-  82          {
-  83   1        OledSendCmd(0xb0+y);
-  84   1        OledSendCmd((((x + 2)&0xf0)>>4)|0x10);
-  85   1        OledSendCmd(((x + 2)&0x0f)); 
-  86   1      }
-  87          
-  88          //开启OLED显示    
-  89          void OLED_Display_On(void)
-  90          {
-  91   1              OledSendCmd(0X8D);  //SET DCDC命令
-  92   1              OledSendCmd(0X14);  //DCDC ON
-  93   1              OledSendCmd(0XAF);  //DISPLAY ON
-  94   1      }
-  95          
-  96          //关闭OLED显示     
-  97          void OLED_Display_Off(void)
-  98          {
-  99   1              OledSendCmd(0X8D);  //SET DCDC命令
- 100   1              OledSendCmd(0X10);  //DCDC OFF
- 101   1              OledSendCmd(0XAE);  //DISPLAY OFF
- 102   1      }       
- 103          
- 104          //清屏函数,清完屏,整个屏幕是黑色的!和没点亮一样!!!        
- 105          void OLED_Clear(void)  
- 106          {  
- 107   1              unsigned char i, n;                 
- 108   1              for(i=0;i<8;i++)  
- 109   1              {  
- 110   2                      OledSendCmd (0xb0+i);    //设置页地址（0~7）
- 111   2                      OledSendCmd (0x02);      //设置显示位置—列低地址
- 112   2                      OledSendCmd (0x10);      //设置显示位置—列高地址   
- 113   2                      for(n=0;n<128;n++)
- 114   2                              OledSendDate(0); 
- 115   2              } //更新显示
- 116   1      }
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 3   
+  53   1              senddelay();
+  54   1              
+  55   1              for(i = 0; i<8; ++i){  // first send D7
+  56   2      //              epaperCLK = 0;
+  57   2                      OLED_SCL = 0;
+  58   2                      senddelay();
+  59   2                      
+  60   2                      temp=0x80 & date;
+  61   2                      //epaperDIN = ((read & com) == 1 ? 1: 0);
+  62   2                      if(temp == 0)
+  63   2      //                      epaperDIN=0;
+  64   2                              OLED_SDIN = 0;
+  65   2                      else
+  66   2      //                      epaperDIN=1;
+  67   2                              OLED_SDIN = 1;
+  68   2                      senddelay();
+  69   2                      
+  70   2      //              epaperCLK = 1;
+  71   2                      OLED_SCL = 1;
+  72   2                      date<<=1;
+  73   2                      senddelay();
+  74   2              }  // end for
+  75   1              
+  76   1      //      epaperCS=1;
+  77   1              OLED_CS = 1;
+  78   1      }
+  79          
+  80          void Oled_Set_Pos(unsigned char x, unsigned char y)
+  81          {
+  82   1        OledSendCmd( 0xb0 + y);
+  83   1        OledSendCmd(((x & 0xf0) >> 4) | 0x10);
+  84   1        OledSendCmd((x & 0x0f) | 0x01); 
+  85   1      }
+  86          
+  87          //开启OLED显示    
+  88          void OLED_Display_On(void)
+  89          {
+  90   1              OledSendCmd(0X8D);  //SET DCDC命令
+  91   1              OledSendCmd(0X14);  //DCDC ON
+  92   1              OledSendCmd(0XAF);  //DISPLAY ON
+  93   1      }
+  94          
+  95          //关闭OLED显示     
+  96          void OLED_Display_Off(void)
+  97          {
+  98   1              OledSendCmd(0X8D);  //SET DCDC命令
+  99   1              OledSendCmd(0X10);  //DCDC OFF
+ 100   1              OledSendCmd(0XAE);  //DISPLAY OFF
+ 101   1      }       
+ 102          
+ 103          //清屏函数,清完屏,整个屏幕是黑色的!和没点亮一样!!!        
+ 104          void OLED_Clear(void)  
+ 105          {  
+ 106   1              unsigned char i, n;                 
+ 107   1              for(i = 0; i < 8; i++)  
+ 108   1              {  
+ 109   2                      OledSendCmd (0xb0 + i);    //设置页地址（0~7）
+ 110   2                      OledSendCmd (0x00);      //设置显示位置—列低地址
+ 111   2                      OledSendCmd (0x10);      //设置显示位置—列高地址   
+ 112   2                      for(n = 0; n < 128; n++)
+ 113   2                              OledSendDate(0); 
+ 114   2              } //更新显示
+C51 COMPILER V9.00   OLED                                                                  08/25/2021 15:03:12 PAGE 3   
 
- 117          
- 118          
- 119          
- 120          // 显示一组6_8字符串
- 121          void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
- 122          {
- 123   1              unsigned char c = 0, i = 0, j = 0;
- 124   1              
- 125   1              while (ch[j]!='\0'){    
- 126   2                      c = ch[j] - 32;
- 127   2                      if(x > 118){
- 128   3                              x = 0;
- 129   3                              y++;
- 130   3                      }
- 131   2                      Oled_Set_Pos(x, y);
- 132   2                      for(i=0;i<6;i++)
- 133   2                              OledSendDate(F6x8[c][i]);
- 134   2                      x += 6;
- 135   2                      j++;
- 136   2              }
- 137   1      }
- 138           
- 139          //显示数字
- 140          void OLED_Displaynum6_8(const unsigned int x, const unsigned char y, double num){
- 141   1              unsigned char ch[21] ;
- 142   1              
- 143   1              sprintf(ch, "%.2f", num);
- 144   1              if( isDecimal(num) )
- 145   1                      ;
- 146   1              else
- 147   1                      ch[strlen(ch) - 3] = '\0';
- 148   1              OLED_P6x8Str(x, y, ch);
- 149   1      }
- 150          
- 151          // 初始化OLED
- 152          void InitOled(){
- 153   1              OLED_RST = 1;
- 154   1              delay(100);
- 155   1              OLED_RST = 0;
- 156   1              delay(100);
- 157   1              OLED_RST = 1;
- 158   1              
- 159   1              OledSendCmd(0xAE);//--turn off oled panel
- 160   1              OledSendCmd(0x02);//---set low column address
- 161   1              OledSendCmd(0x10);//---set high column address
- 162   1              OledSendCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
- 163   1              OledSendCmd(0x81);//--set contrast control register
- 164   1              OledSendCmd(0xCF); // Set SEG Output Current Brightness
- 165   1              OledSendCmd(0xA1);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
- 166   1              OledSendCmd(0xC8);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
- 167   1              OledSendCmd(0xA6);//--set normal display
- 168   1              OledSendCmd(0xA8);//--set multiplex ratio(1 to 64)
- 169   1              OledSendCmd(0x3f);//--1/64 duty
- 170   1              OledSendCmd(0xD3);//-set display offset Shift Mapping RAM Counter (0x00~0x3F)
- 171   1              OledSendCmd(0x00);//-not offset
- 172   1              OledSendCmd(0xd5);//--set display clock divide ratio/oscillator frequency
- 173   1              OledSendCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
- 174   1              OledSendCmd(0xD9);//--set pre-charge period
- 175   1              OledSendCmd(0xF1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
- 176   1              OledSendCmd(0xDA);//--set com pins hardware configuration
- 177   1              OledSendCmd(0x12);
- 178   1              OledSendCmd(0xDB);//--set vcomh
-C51 COMPILER V9.00   OLED                                                                  07/27/2021 20:48:46 PAGE 4   
+ 115   1      }
+ 116          
+ 117          // 显示一个6_8字符
+ 118          void OLED_P6x8Char(unsigned char x, unsigned char y, unsigned char ch){
+ 119   1              unsigned char c = 0, i = 0, j = 0;
+ 120   1              
+ 121   1              c = ch - 32;
+ 122   1              if(x > 118){
+ 123   2                      x = 0;
+ 124   2                      y++;
+ 125   2              }
+ 126   1              Oled_Set_Pos(x, y);
+ 127   1              for(i=0;i<6;i++)
+ 128   1                      OledSendDate(F6x8[c][i]);
+ 129   1      }
+ 130          
+ 131          // 显示一组6_8字符串
+ 132          void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
+ 133          {
+ 134   1              unsigned char c = 0, i = 0, j = 0;
+ 135   1              
+ 136   1              while (ch[j]!='\0'){    
+ 137   2                      c = ch[j] - 32;
+ 138   2                      if(x > 118){
+ 139   3                              x = 0;
+ 140   3                              y++;
+ 141   3                      }
+ 142   2                      Oled_Set_Pos(x, y);
+ 143   2                      for(i=0;i<6;i++)
+ 144   2                              OledSendDate(F6x8[c][i]);
+ 145   2                      x += 6;
+ 146   2                      j++;
+ 147   2              }
+ 148   1      }
+ 149           
+ 150          // 显示数字
+ 151          void OLED_Displaynum6_8(const unsigned int x, const unsigned char y, double num){
+ 152   1              unsigned char ch[21] ;
+ 153   1              
+ 154   1              sprintf(ch, "%.2f", num);
+ 155   1              if( isDecimal(num) )
+ 156   1                      ;
+ 157   1              else
+ 158   1                      ch[strlen(ch) - 3] = '\0';
+ 159   1              OLED_P6x8Str(x, y, ch);
+ 160   1      }
+ 161          
+ 162          // 初始化OLED
+ 163          void InitOled(){
+ 164   1              OLED_RST = 1;
+ 165   1              delay(100);
+ 166   1              OLED_RST = 0;
+ 167   1              delay(100);
+ 168   1              OLED_RST = 1;
+ 169   1              
+ 170   1              OledSendCmd(0xAE);//--turn off oled panel
+ 171   1              OledSendCmd(0x00);//---set low column address
+ 172   1              OledSendCmd(0x10);//---set high column address
+ 173   1              OledSendCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+ 174   1              OledSendCmd(0x81);//--set contrast control register
+ 175   1              OledSendCmd(0xCF); // Set SEG Output Current Brightness
+ 176   1              OledSendCmd(0xA0);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
+C51 COMPILER V9.00   OLED                                                                  08/25/2021 15:03:12 PAGE 4   
 
- 179   1              OledSendCmd(0x40);//Set VCOM Deselect Level
- 180   1              OledSendCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
- 181   1              OledSendCmd(0x02);//
- 182   1              OledSendCmd(0x8D);//--set Charge Pump enable/disable
- 183   1              OledSendCmd(0x14);//--set(0x10) disable
- 184   1              OledSendCmd(0xA4);// Disable Entire Display On (0xa4/0xa5)
- 185   1              OledSendCmd(0xA6);// Disable Inverse Display On (0xa6/a7) 
- 186   1              OledSendCmd(0xAF);//--turn on oled panel
- 187   1              
- 188   1              OledSendCmd(0xAF); /*display ON*/ 
- 189   1              OLED_Clear();
- 190   1              Oled_Set_Pos(0,0);      
- 191   1      }
+ 177   1              OledSendCmd(0xC0);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
+ 178   1              OledSendCmd(0xA6);//--set normal display
+ 179   1              OledSendCmd(0xA8);//--set multiplex ratio(1 to 64)
+ 180   1              OledSendCmd(0x3f);//--1/64 duty
+ 181   1              OledSendCmd(0xD3);//-set display offset Shift Mapping RAM Counter (0x00~0x3F)
+ 182   1              OledSendCmd(0x00);//-not offset
+ 183   1              OledSendCmd(0xd5);//--set display clock divide ratio/oscillator frequency
+ 184   1              OledSendCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
+ 185   1              OledSendCmd(0xD9);//--set pre-charge period
+ 186   1              OledSendCmd(0xF1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+ 187   1              OledSendCmd(0xDA);//--set com pins hardware configuration
+ 188   1              OledSendCmd(0x12);
+ 189   1              OledSendCmd(0xDB);//--set vcomh
+ 190   1              OledSendCmd(0x40);//Set VCOM Deselect Level
+ 191   1              OledSendCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
+ 192   1              OledSendCmd(0x02);//
+ 193   1              OledSendCmd(0x8D);//--set Charge Pump enable/disable
+ 194   1              OledSendCmd(0x14);//--set(0x10) disable
+ 195   1              OledSendCmd(0xA4);// Disable Entire Display On (0xa4/0xa5)
+ 196   1              OledSendCmd(0xA6);// Disable Inverse Display On (0xa6/a7) 
+ 197   1              OledSendCmd(0xAF);//--turn on oled panel
+ 198   1              
+ 199   1              OledSendCmd(0xAF); /*display ON*/ 
+ 200   1              OLED_Clear();
+ 201   1              Oled_Set_Pos(0,0);      
+ 202   1      }
+ 203          
+ 204          // 新加的带下划线的单字符显示
+ 205          void OLED_P6x8CharUL(unsigned char x, unsigned char y, unsigned char ch, bit u){
+ 206   1              unsigned char c = 0, i = 0, j = 0;
+ 207   1              
+ 208   1              c = ch - 32;
+ 209   1              if(x > 118){
+ 210   2                      x = 0;
+ 211   2                      y++;
+ 212   2              }
+ 213   1              Oled_Set_Pos(x, y);
+ 214   1              if(u){
+ 215   2                      for(i=0;i<6;i++)
+ 216   2                      OledSendDate(F6x8[c][i] | 0x80);
+ 217   2              }
+ 218   1              else{
+ 219   2                      for(i=0;i<6;i++)
+ 220   2                      OledSendDate(F6x8[c][i]);
+ 221   2              }
+ 222   1              
+ 223   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    711    ----
+   CODE SIZE        =    894    ----
    CONSTANT SIZE    =      5    ----
-   XDATA SIZE       =   ----      43
+   XDATA SIZE       =   ----      49
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
+   BIT SIZE         =   ----       1
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
+C51 COMPILER V9.00   OLED                                                                  08/25/2021 15:03:12 PAGE 5   
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

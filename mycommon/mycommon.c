@@ -68,6 +68,19 @@ long mypow(long x, int n){
 	return temp;
 }
 
+// 判断一个整数有几位
+// hmd: how many digits
+int hmd(int n){
+	int temp = 0;
+	
+	while(n){
+		n /= 10;
+		temp++;
+	}
+	
+	return temp;
+}
+
 const unsigned char code F6x8[][6] =
 {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },   // sp

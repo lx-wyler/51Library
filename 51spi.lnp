@@ -9,7 +9,8 @@
 "keyboard.obj",
 "i2c.obj",
 "mpu6050.obj",
-"pac.obj" 
+"pac.obj",
+"eeprom.obj" 
 TO "51spi" 
 
 REMOVEUNUSED 

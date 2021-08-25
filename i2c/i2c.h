@@ -1,7 +1,7 @@
 #ifndef __24C02_H__
 #define __24C02_H__
 
-#include "reg52.h"    
+#include "stc12c5a60s2.h"   
 
 typedef unsigned char i2ctype;
 

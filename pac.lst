@@ -1,46 +1,47 @@
-C51 COMPILER V9.00   PAC                                                                   07/27/2021 20:48:47 PAGE 1   
+C51 COMPILER V9.00   PAC                                                                   08/25/2021 15:03:12 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE PAC
 OBJECT MODULE PLACED IN pac.obj
 COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE pac\pac.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_head
-                    -;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG PRINT(.\pac.lst) OBJECT(pac.obj)
+                    -;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac;.\eeprom) DEBUG PRINT(.\pac.lst) OBJECT(pac.obj)
 
 line level    source
 
    1          #include "pac.h"
-   2          
+   2          #include "stc12c5a60s2.h"
    3          
    4          
-   5          void init_pwm(bit pwm0, bit pwm1){
-   6   1              CCON = 0;
-   7   1              
-   8   1              CL = 0;
-   9   1              CH = 0;
-  10   1              CMOD = 0x08;
-  11   1              
-  12   1              if(pwm0){
-  13   2                      CCAP0H = CCAP0L = 0x00;  // 占空比
-  14   2                      CCAPM0 = 0x42;
-  15   2              }
-  16   1              
-  17   1              if(pwm1){
-  18   2                      CCAP1H = CCAP1L = 0x00;
-  19   2                      CCAPM1 = 0x42;
-  20   2              }
-  21   1              
-  22   1              CR = 1;
-  23   1      }
-  24          
+   5          
+   6          void init_pwm(bit pwm0, bit pwm1){
+   7   1              CCON = 0;
+   8   1              
+   9   1              CL = 0;
+  10   1              CH = 0;
+  11   1              CMOD = 0x08;
+  12   1              
+  13   1              if(pwm0){
+  14   2                      CCAP0H = CCAP0L = 0x00;  // 占空比
+  15   2                      CCAPM0 = 0x42;
+  16   2              }
+  17   1              
+  18   1              if(pwm1){
+  19   2                      CCAP1H = CCAP1L = 0x00;
+  20   2                      CCAPM1 = 0x42;
+  21   2              }
+  22   1              
+  23   1              CR = 1;
+  24   1      }
   25          
-  26          void set_pwm_duty(bit pwmn, unsigned char duty){
-  27   1              if(pwmn){
-  28   2                      CCAP1H = duty;
-  29   2              }
-  30   1              else{
-  31   2                      CCAP0H = duty;
-  32   2              }
-  33   1      }
+  26          
+  27          void set_pwm_duty(bit pwmn, unsigned char duty){
+  28   1              if(pwmn){
+  29   2                      CCAP1H = duty;
+  30   2              }
+  31   1              else{
+  32   2                      CCAP0H = duty;
+  33   2              }
+  34   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

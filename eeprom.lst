@@ -1,0 +1,93 @@
+C51 COMPILER V9.00   EEPROM                                                                08/25/2021 15:03:12 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE EEPROM
+OBJECT MODULE PLACED IN eeprom.obj
+COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE eeprom\eeprom.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\othe
+                    -r_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac;.\eeprom) DEBUG PRINT(.\eeprom.lst) OBJECT(eeprom.obj)
+
+line level    source
+
+   1          #include "eeprom.h"
+   2          #include "mycommon.h"
+   3          #include <intrins.h>
+   4          #include "stc12c5a60s2.h"
+   5          
+   6          
+   7          
+   8          // Disable ISP/IAP/EEPROM function
+   9          void IapIdle(){
+  10   1              IAP_CONTR = 0;  // close iap function
+  11   1              IAP_CMD = 0;  // clear command to standby
+  12   1              IAP_TRIG = 0;  // clear trigger register
+  13   1              IAP_ADDRH = 0x80;  // data ptr point to non-EEPROM area
+  14   1              IAP_ADDRL = 0;  // clear iap address to prevent misuse
+  15   1      }
+  16          
+  17          // Read one byte from eeprom
+  18          // Input: addr(eeprom address)
+  19          // Output: flash data
+  20          uchar IapReadByre(uint addr){
+  21   1              uchar data_temp;
+  22   1              
+  23   1              IAP_CONTR = ENABLE_IAP;  // Open iap function and set wait time
+  24   1              IAP_CMD = CMD_READ;  // set iap read command
+  25   1              IAP_ADDRL = addr;
+  26   1              IAP_ADDRH = addr >> 8;
+  27   1              IAP_TRIG = 0x5a;
+  28   1              IAP_TRIG = 0xa5;
+  29   1              _nop_();
+  30   1              
+  31   1              data_temp = IAP_DATA;
+  32   1              IapIdle();
+  33   1              
+  34   1              return data_temp;
+  35   1      }
+  36          
+  37          // program one byte to eeprom
+  38          // Input: addr, data
+  39          void IapWriteByte(uint addr, uchar data_temp){
+  40   1              IAP_CONTR = ENABLE_IAP;
+  41   1              IAP_CMD = CMD_PROGRAM;
+  42   1              IAP_ADDRL = addr;
+  43   1              IAP_ADDRH = addr >> 8;
+  44   1              IAP_DATA = data_temp;
+  45   1              IAP_TRIG = 0x5a;
+  46   1              IAP_TRIG = 0xa5;
+  47   1              _nop_();
+  48   1              
+  49   1              IapIdle();
+  50   1      }
+  51          
+  52          // erase one sector of eeprom
+  53          void IapEraseSector(uint addr){
+  54   1              IAP_CONTR = ENABLE_IAP;
+C51 COMPILER V9.00   EEPROM                                                                08/25/2021 15:03:12 PAGE 2   
+
+  55   1              IAP_CMD = CMD_ERASE;
+  56   1              IAP_ADDRL = addr;
+  57   1              IAP_ADDRH = addr >> 8;
+  58   1              IAP_TRIG = 0x5a;
+  59   1              IAP_TRIG = 0xa5;
+  60   1              _nop_();
+  61   1              
+  62   1              IapIdle();
+  63   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     83    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

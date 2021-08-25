@@ -310,7 +310,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\uart;.\epaper;.\led;.\other_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac</IncludePath>
+              <IncludePath>.\uart;.\epaper;.\led;.\other_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac;.\eeprom</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -371,6 +371,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stc12c5a60s2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\stc12c5a60s2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -536,6 +541,21 @@
               <FileName>pac.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\pac\pac.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eeprom</GroupName>
+          <Files>
+            <File>
+              <FileName>eeprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\eeprom\eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>eeprom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\eeprom\eeprom.h</FilePath>
             </File>
           </Files>
         </Group>

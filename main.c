@@ -1,4 +1,4 @@
-#include <reg52.h>
+#include "stc12c5a60s2.h"
 #include "LED.h"
 #include "smg.h"
 #include "ePaper.h"

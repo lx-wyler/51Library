@@ -1,10 +1,10 @@
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 1   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE EPAPER
 OBJECT MODULE PLACED IN ePaper.obj
 COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE epaper\ePaper.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\othe
-                    -r_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG PRINT(.\ePaper.lst) OBJECT(ePaper.obj)
+                    -r_head;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac;.\eeprom) DEBUG PRINT(.\ePaper.lst) OBJECT(ePaper.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          
   53          
   54          // 51 send date to ePaper
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 2   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 2   
 
   55          void sendDate(unsigned char date){
   56   1              
@@ -126,7 +126,7 @@ line level    source
  114          void lcd_chkstatus(){
  115   1        unsigned char busy;
  116   1              //LED0=0;
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 3   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 3   
 
  117   1        do
  118   1        {
@@ -190,7 +190,7 @@ line level    source
  176   1          sendDate(0xf7);
  177   1             
  178   1          sendCom(0X02);   //power off
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 4   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 4   
 
  179   1          lcd_chkstatus();
  180   1          sendCom(0X07);   //deep sleep
@@ -202,7 +202,7 @@ line level    source
  186          void epaperClean()
  187          {
  188   1          unsigned int i;
- 189   1              unsigned char temp = 0xFF;
+ 189   1              unsigned char temp = 0xff;
  190   1              
  191   1                
  192   1              LED0=0;
@@ -254,7 +254,7 @@ line level    source
  238   2                      sendDate((unsigned char)(x >> 8) & 0x01);
  239   2                      sendDate((unsigned char)(x & 0x00ff));
  240   2                      sendDate((unsigned char)(( x + (6 * n - 1 ) >> 8) & 0x01));
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 5   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 5   
 
  241   2                      sendDate((unsigned char)(( x + (6 * n - 1 )) & 0x00ff));
  242   2              }
@@ -318,7 +318,7 @@ line level    source
  300   3                      }
  301   2                      if(!negativeflag)
  302   2                              N--;
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 6   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 6   
 
  303   2              }
  304   1              
@@ -382,7 +382,7 @@ line level    source
  362          
  363          // 显示字符串
  364          // 位置规定同数字，也可以看相应的set_par_pos6_8()；
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 7   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 7   
 
  365          bit Displaystr6_8(const unsigned int x, const unsigned char y,unsigned char *ch){
  366   1              
@@ -446,7 +446,7 @@ line level    source
  424   3                              newlineflag = 1;
  425   3                      }
  426   2                      else
-C51 COMPILER V9.00   EPAPER                                                                07/27/2021 20:48:46 PAGE 8   
+C51 COMPILER V9.00   EPAPER                                                                08/25/2021 15:03:11 PAGE 8   
 
  427   2                              showlen = strlenth;
  428   2                      

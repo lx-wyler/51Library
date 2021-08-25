@@ -4,6 +4,10 @@
 #include "commonfront.h"
 #include <stdio.h>
 #include <string.h>
+#include "clearrobot.h"
+#include "keyboard.h"
+#include "mpu6050.h"
+#include "clearrobot.h"
 
 
 
@@ -18,26 +22,21 @@ void OledSendCmd(unsigned char cmd){
 	senddelay();
 	
 	for(i = 0; i<8; ++i){  // first send D7
-//	    epaperCLK = 0;
 		OLED_SCL = 0;
 		senddelay();
 		
 		temp=0x80 & cmd;
 		if(temp == 0)
-//			epaperDIN=0;
 			OLED_SDIN = 0;
 		else
-//			epaperDIN=1;
 			OLED_SDIN = 1;
 		senddelay();
 		
-//		epaperCLK = 1;
 		OLED_SCL = 1;
 		cmd <<= 1;
 		senddelay();
 	}  // end for
 	
-//	epaperCS=1;
 	OLED_CS = 1;
 }
 
@@ -80,9 +79,9 @@ void OledSendDate(unsigned char date){
 
 void Oled_Set_Pos(unsigned char x, unsigned char y)
 {
-  OledSendCmd(0xb0+y);
-  OledSendCmd((((x + 2)&0xf0)>>4)|0x10);
-  OledSendCmd(((x + 2)&0x0f)); 
+  OledSendCmd( 0xb0 + y);
+  OledSendCmd(((x & 0xf0) >> 4) | 0x10);
+  OledSendCmd((x & 0x0f) | 0x01); 
 }
 
 //开启OLED显示    
@@ -105,17 +104,29 @@ void OLED_Display_Off(void)
 void OLED_Clear(void)  
 {  
 	unsigned char i, n;		    
-	for(i=0;i<8;i++)  
+	for(i = 0; i < 8; i++)  
 	{  
-		OledSendCmd (0xb0+i);    //设置页地址（0~7）
-		OledSendCmd (0x02);      //设置显示位置—列低地址
+		OledSendCmd (0xb0 + i);    //设置页地址（0~7）
+		OledSendCmd (0x00);      //设置显示位置—列低地址
 		OledSendCmd (0x10);      //设置显示位置—列高地址   
-		for(n=0;n<128;n++)
+		for(n = 0; n < 128; n++)
 			OledSendDate(0); 
 	} //更新显示
 }
 
-
+// 显示一个6_8字符
+void OLED_P6x8Char(unsigned char x, unsigned char y, unsigned char ch){
+	unsigned char c = 0, i = 0, j = 0;
+	
+	c = ch - 32;
+	if(x > 118){
+		x = 0;
+		y++;
+	}
+	Oled_Set_Pos(x, y);
+	for(i=0;i<6;i++)
+		OledSendDate(F6x8[c][i]);
+}
 
 // 显示一组6_8字符串
 void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
@@ -136,7 +147,7 @@ void OLED_P6x8Str(unsigned char x,unsigned char y,unsigned char ch[])
 	}
 }
  
-//显示数字
+// 显示数字
 void OLED_Displaynum6_8(const unsigned int x, const unsigned char y, double num){
 	unsigned char ch[21] ;
 	
@@ -157,13 +168,13 @@ void InitOled(){
 	OLED_RST = 1;
 	
 	OledSendCmd(0xAE);//--turn off oled panel
-	OledSendCmd(0x02);//---set low column address
+	OledSendCmd(0x00);//---set low column address
 	OledSendCmd(0x10);//---set high column address
 	OledSendCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
 	OledSendCmd(0x81);//--set contrast control register
 	OledSendCmd(0xCF); // Set SEG Output Current Brightness
-	OledSendCmd(0xA1);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
-	OledSendCmd(0xC8);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
+	OledSendCmd(0xA0);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
+	OledSendCmd(0xC0);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
 	OledSendCmd(0xA6);//--set normal display
 	OledSendCmd(0xA8);//--set multiplex ratio(1 to 64)
 	OledSendCmd(0x3f);//--1/64 duty
@@ -188,4 +199,25 @@ void InitOled(){
 	OledSendCmd(0xAF); /*display ON*/ 
 	OLED_Clear();
 	Oled_Set_Pos(0,0); 	
+}
+
+// 新加的带下划线的单字符显示
+void OLED_P6x8CharUL(unsigned char x, unsigned char y, unsigned char ch, bit u){
+	unsigned char c = 0, i = 0, j = 0;
+	
+	c = ch - 32;
+	if(x > 118){
+		x = 0;
+		y++;
+	}
+	Oled_Set_Pos(x, y);
+	if(u){
+		for(i=0;i<6;i++)
+		OledSendDate(F6x8[c][i] | 0x80);
+	}
+	else{
+		for(i=0;i<6;i++)
+		OledSendDate(F6x8[c][i]);
+	}
+	
 }

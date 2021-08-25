@@ -1,70 +1,100 @@
-C51 COMPILER V9.00   UART                                                                  07/27/2021 20:48:46 PAGE 1   
+C51 COMPILER V9.00   UART                                                                  08/25/2021 15:03:11 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE UART
 OBJECT MODULE PLACED IN uart.obj
 COMPILER INVOKED BY: C:\RJ\Keil_v5\C51\BIN\C51.EXE uart\uart.c LARGE OMF2 BROWSE INCDIR(.\uart;.\epaper;.\led;.\other_he
-                    -ad;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac) DEBUG PRINT(.\uart.lst) OBJECT(uart.obj)
+                    -ad;.\keyboard;.\smg;.\OLED;.\mycommon;.\i2c;.\mpu6050;.\pac;.\eeprom) DEBUG PRINT(.\uart.lst) OBJECT(uart.obj)
 
 line level    source
 
    1          #include "uart.h"
    2          #include "PinDefine.h"
-   3          #include "smg.h"
-   4          
-   5          unsigned char code send_buff[SENDBUFFMAXSIZE] = 0;
-   6          unsigned char rbuff[30] = {0};
-   7          unsigned char cout = 0;
-   8          
-   9          void UartInit()         //9600bps@11.0592MHz
-  10          {
-  11   1              TMOD = 0X20;  // 定时器1工作方式2
-  12   1              TH1 = 0XFD;
-  13   1              TL1 = 0XFD;
-  14   1              TR1 = 1;
-  15   1              SM0 = 0;
-  16   1              SM1 = 1;
-  17   1              REN = 1;
-  18   1              EA = 1;
-  19   1              ES = 1;
-  20   1      }
-  21          
-  22          void flagSendOneTime(){
-  23   1              SMG4 = ~SMG4;
-  24   1              a = ~a;
-  25   1      }
-  26          
-  27          void sendChar(unsigned char c){
-  28   1              SBUF = c;
-  29   1              while(!TI);
-  30   1      //              if(c != 0)
-  31   1      //                LED0 = 0;
-  32   1      //              else
-  33   1      //                      LED1 = 0;
-  34   1      //      if(c != 0)
-  35   1      //        LED0 = 1;
-  36   1      //      else
-  37   1      //              LED1 = 1;
-  38   1              TI=0;
-  39   1      }
-  40          
-  41          void irq_receive() interrupt 4{
-  42   1              // 还没加
-  43   1              rbuff[cout++] = SBUF;
-  44   1              RI = 0;
-  45   1      }
+   3          #include "clearrobot.h"
+*** WARNING C318 IN LINE 3 OF uart\uart.c: can't open file 'clearrobot.h'
+   4          #include "eeprom.h"
+   5          #include "stc12c5a60s2.h"
+   6          
+   7          unsigned char code send_buff[SENDBUFFMAXSIZE] = 0;
+   8          unsigned char rbuff[30] = {0};
+   9          unsigned char cout = 0;
+  10          
+  11          unsigned char flag_down = 0;
+  12          unsigned char down_buff[3] = {0x5a, 0x5a, 0x24};
+  13          unsigned char down_rbuff[3] = {0};  // 这3个是自动下载用的
+  14          
+  15          void UartInit()         //9600bps@11.0592MHz
+  16          {
+  17   1              TMOD = 0X20;  // 定时器1工作方式2
+  18   1              TH1 = 0XFD;
+  19   1              TL1 = 0XFD;
+  20   1              TR1 = 1;
+  21   1              SM0 = 0;
+  22   1              SM1 = 1;
+  23   1              REN = 1;
+  24   1              EA = 1;
+  25   1              ES = 1;
+  26   1      }
+  27          
+  28          
+  29          void sendChar(unsigned char c){
+  30   1              SBUF = c;
+  31   1              while(!TI);
+  32   1              TI=0;
+  33   1      }
+  34          
+  35          void irq_receive() interrupt 4{
+  36   1              // 还没加
+  37   1              rbuff[cout++] = SBUF;
+  38   1              down_rbuff[flag_down] = SBUF;
+  39   1              
+  40   1              if(down_rbuff[flag_down] == down_buff[flag_down]){
+  41   2                      if(flag_down < 3){
+  42   3                              flag_down++;
+  43   3                      }
+  44   2                      if(flag_down == 3){
+  45   3                              IAP_CONTR = 0x60;
+  46   3                      }
+  47   2              }
+  48   1              else{
+  49   2                      flag_down = 0;
+  50   2              }
+  51   1              
+  52   1              RI = 0;
+  53   1      }
+C51 COMPILER V9.00   UART                                                                  08/25/2021 15:03:11 PAGE 2   
+
+  54          
+  55          // -----------------------------------
+  56          // --------- clearrobot add ----------
+  57          // -----------------------------------
+  58          
+  59          void send_cto(int cto_temp){
+  60   1              static bit flag_send_none = 0;
+  61   1              
+  62   1              if(!cto_temp){
+  63   2                      if(!flag_send_none){
+  64   3                              sendChar(cto_temp);
+  65   3                              sendChar(cto_temp);
+  66   3                              sendChar(cto_temp);
+  67   3                              flag_send_none = 1;
+  68   3                      }
+  69   2              }
+  70   1              else{
+  71   2                      sendChar(cto_temp);
+  72   2                      flag_send_none = 0;
+  73   2              }
+  74   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     84    ----
+   CODE SIZE        =    190    ----
    CONSTANT SIZE    =     50    ----
-   XDATA SIZE       =     31    ----
+   XDATA SIZE       =     38    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
-C51 COMPILER V9.00   UART                                                                  07/27/2021 20:48:46 PAGE 2   
-
-   BIT SIZE         =   ----    ----
+   BIT SIZE         =      1    ----
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
@@ -72,4 +102,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
